@@ -30,7 +30,7 @@ exports.checkQuiz = (req, res, next) => {
 	sequelize.models.quiz.findByPk(id)
 	.then(quiz => {
 		if(!quiz){
-			res.render(`El quiz ${req.params.quizId} no existe.`)
+			res.render(`El quiz ${req.params.quizId} no existe.`);
 		}
 		if(quiz.answer.toLowerCase().trim()===answer.toLowerCase().trim()){
 			result = "Correct";
@@ -44,12 +44,37 @@ exports.checkQuiz = (req, res, next) => {
 
 //GET /quizzes/:quizId/edit
 exports.editQuiz = (req, res, next) => {
+	const id = Number(req.params.quizId);
+	sequelize.models.quiz.findByPk(id)
+	.then(quiz => {
+		if(!quiz){
+			res.render(`El quiz ${req.params.quizId} no existe.`);
+		}
+		res.render('quizzes/edit.ejs', {quiz} );
+	})
+	.catch(error => next(error));
+};
 
+//GET /quizzes/:quizId/check
+exports.updateQuiz = (req, res, next) => {
+	const id = Number(req.params.quizId);
+	const {question,answer} = req.body;
+	sequelize.models.quiz.update( {question,answer}, { where: {id} } )
+	.then(() => res.redirect('/quizzes'))
+	.catch(error => next(error));
 };
 
 //GET /quizzes/:quizId
 exports.showQuiz = (req, res, next) => {
-
+	const id = Number(req.params.quizId);
+	sequelize.models.quiz.findByPk(id)
+	.then(quiz => {
+		if(!quiz){
+			res.render(`El quiz ${req.params.quizId} no existe.`)
+		}
+		res.render('quizzes/show.ejs', {quiz} );
+	})
+	.catch(error => next(error));
 };
 
 //GET /quizzes/new
@@ -61,7 +86,7 @@ exports.newQuiz = (req, res, next) => {
 exports.deleteQuiz = (req, res, next) => {
 	const id = Number(req.params.quizId);
 	sequelize.models.quiz.destroy( {where: {id} } )
-	.then(quiz => res.redirect('/quizzes'))
+	.then(() => res.redirect('/quizzes'))
 	.catch(error => next(error));	
 };
 

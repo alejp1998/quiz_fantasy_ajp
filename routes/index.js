@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var quizController = require('../controllers/quiz.js')
+var quizController = require('../controllers/quiz.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,7 +16,7 @@ router.get('quizzes/:quizId(\\d+)/edit',quizController.editQuiz);
 router.get('quizzes/new',quizController.newQuiz);
 
 /*PUT quizzes*/
-
+router.put('quizzes/:quizId(\\d+)',quizController.updateQuiz);
 /*POST quizzes*/
 
 /*DELETE quizzes*/
