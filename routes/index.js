@@ -18,7 +18,7 @@ router.get('quizzes/new',quizController.newQuiz);
 /*PUT quizzes*/
 router.put('quizzes/:quizId(\\d+)',quizController.updateQuiz);
 /*POST quizzes*/
-
+router.put('quizzes/:quizId(\\d+)',quizController.addQuiz);
 /*DELETE quizzes*/
 router.delete('quizzes/:quizId(\\d+)',quizController.deleteQuiz);
 

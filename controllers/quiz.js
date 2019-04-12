@@ -79,8 +79,18 @@ exports.showQuiz = (req, res, next) => {
 
 //GET /quizzes/new
 exports.newQuiz = (req, res, next) => {
-
+	res.render('quizzes/new.ejs');
 };
+
+//POST /quizzes/
+exports.addQuiz = (req, res, next) => {
+	const {question, answer} = req.body;
+
+	sequelize.models.quiz.create({question, answer})
+		.then(() => res.redirect('/quizzes'))
+		.catch(next);
+};
+
 
 //DELETE /quizzes/:quizId
 exports.deleteQuiz = (req, res, next) => {
