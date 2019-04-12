@@ -1,0 +1,27 @@
+{
+  "name": "quiz-express",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "heroku local:start",
+    "supervisor": "./bin/www"
+  },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.4.1"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "express-partials": "^0.3.0",
+    "http-errors": "~1.6.2",
+    "method-override": "^3.0.0",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.18.11",
+    "sequelize": "^5.3.0",
+    "serve-favicon": "^2.5.0",
+    "sqlite3": "^4.0.6"
+  }
+}

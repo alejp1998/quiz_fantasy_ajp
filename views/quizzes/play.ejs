@@ -1,0 +1,20 @@
+<h1>Play Quiz <%=quiz.id%></h1>
+<form method="get" action="/quizzes/<%=quiz.id%>/check">
+  <table class="playQuiz">
+    <div>
+        <tr>
+          <td>
+          <p class="question"><%=quiz.question%></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          <input type="text" placeholder="Answer" class="answer" name="answer" autocomplete="off">
+          </td>
+          <td>
+          <input type="submit" class="button" value="Check">
+          </td>
+        </tr>
+    </div>    
+  </table>
+</form>
