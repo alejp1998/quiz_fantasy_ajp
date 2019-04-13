@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var quizController = require('../controllers/quiz.js');
 
+/*Autoload for routes with param quizId*/
+router.param('quizId',quizController.load);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index.ejs');

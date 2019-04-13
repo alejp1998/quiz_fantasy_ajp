@@ -19,12 +19,12 @@ body {
 	border: 1px solid #999;
 	padding: 2px;
 	margin: 1px;
-	background: white;
 }
 
 #mainHeader {
 	margin: 0 auto;
-	background-color: #4b9dff;
+	background: url(../images/space.jpg);
+	background-size: 100% 100%;
 	border-radius: 5px;
 }
 
@@ -47,12 +47,13 @@ body {
 	border-radius: 5px;
 	text-align: center;
 	padding: 5px 5px;
-	background-color: #4b9dff;
+	background-color: #546e7a;
 }
 #mainSection{
+	color: white;
 	border-radius: 5px;
 	padding: 5px 5px;
-	background-color: #1103a8;
+	background-color: #00838f;
 }
 
 #mainSection p{
@@ -86,7 +87,7 @@ a,a:visited,a:hover,a:active{
 	font-size:1.5em;
 }
 a:hover{
-	color:#d73444;
+	color:#76ff03;
 }
 a.before:before,a.after:after{
 	content: "";
@@ -132,6 +133,6 @@ a.first:after{
 }
 
 #mainSection a.button:hover {
-	color: rgba(255, 255, 255, 0.85);
+	color: #76ff03;
 	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 }
