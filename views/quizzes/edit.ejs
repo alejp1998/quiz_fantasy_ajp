@@ -1,0 +1,18 @@
+<h2 class="edit">Edit Quiz <%=quiz.id%></h2>
+<form method="post" action="/quizzes/<%=quiz.id%>?_method=PUT">
+  <table class="editQuiz">
+        <tr>
+          <td>
+          <input type="text" placeholder="<%=quiz.question%>" class="answer" name="question" autocomplete="off">
+          </td>
+        </tr>
+        <tr>
+          <td>
+          <input type="text" placeholder="<%=quiz.answer%>" class="answer" name="answer" autocomplete="off">
+          </td>
+          <td>
+          <input type="submit" class="button" value="Edit Quiz">
+          </td>
+        </tr>
+  </table>
+</form>

@@ -11,16 +11,16 @@ router.get('/', function(req, res, next) {
 router.get('/quizzes', quizController.index);
 router.get('/quizzes/:quizId(\\d+)/play',quizController.playQuiz);
 router.get('/quizzes/:quizId(\\d+)/check',quizController.checkQuiz);
-router.get('quizzes/:quizId(\\d+)',quizController.showQuiz);
-router.get('quizzes/:quizId(\\d+)/edit',quizController.editQuiz);
-router.get('quizzes/new',quizController.newQuiz);
+router.get('/quizzes/:quizId(\\d+)',quizController.showQuiz);
+router.get('/quizzes/:quizId(\\d+)/edit',quizController.editQuiz);
+router.get('/quizzes/new',quizController.newQuiz);
 
 /*PUT quizzes*/
-router.put('quizzes/:quizId(\\d+)',quizController.updateQuiz);
+router.put('/quizzes/:quizId(\\d+)',quizController.updateQuiz);
 /*POST quizzes*/
-router.put('quizzes/:quizId(\\d+)',quizController.addQuiz);
+router.post('/quizzes',quizController.addQuiz);
 /*DELETE quizzes*/
-router.delete('quizzes/:quizId(\\d+)',quizController.deleteQuiz);
+router.delete('/quizzes/:quizId(\\d+)',quizController.deleteQuiz);
 
 /*GET Credits*/
 router.get('/credits',function(req, res, next) {
