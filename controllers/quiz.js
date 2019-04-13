@@ -102,3 +102,33 @@ exports.deleteQuiz = (req, res, next) => {
 	.catch(error => next(error));	
 };
 
+//GET /quizzes/randomplay
+/*exports.randomPlay = (req, res, next) => {
+	let i=0;
+	let id=0;
+	let quiz;
+	let score;
+	async function getAllIds() {
+		let quizzes = await sequelize.models.quiz.findAll()
+			.each(quiz=>{
+				req.session.randomPlay[i] = quiz.id;
+				i++;
+			});
+	};
+
+	if(req.session.randomPlay.length === 0){
+		req.session.score=0;
+		req.session.randomPlay = [];
+		getAllIds();
+	}
+
+	id = Math.floor(Math.random()*(ids.length));
+	sequelize.models.quiz.findByPk(ids[id])
+		.then(quiz=> {
+			score = req.session.score;
+			return res.render('/quizzes/randomplay', {quiz,score} );
+		})
+		.catch(error => next(error));
+};*/
+
+

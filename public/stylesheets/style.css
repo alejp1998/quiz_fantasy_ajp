@@ -49,6 +49,10 @@ body {
 	padding: 5px 5px;
 	background-color: #546e7a;
 }
+#mainNav a{
+	padding: 0.25em 0.25em;
+}
+
 #mainSection{
 	color: white;
 	border-radius: 5px;

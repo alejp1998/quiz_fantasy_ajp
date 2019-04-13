@@ -5,6 +5,8 @@ var partials = require('express-partials');
 var methodOverride = require('method-override');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
