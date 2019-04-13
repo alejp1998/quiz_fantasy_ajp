@@ -2,13 +2,16 @@ const sequelize = require('../models/index.js');
 
 //Autoload quiz asociado a :quizId
 exports.load = (req, res, next, quizId) => {
-	const quiz = models.quiz.findByPk(Number(quizId));
-	if(quiz){
-		req.quiz = quiz;
-		next();
-	}else{
-		throw new Error('No quiz with id: '+ quizId);
-	}
+	const quiz = sequelize.models.quiz.findByPk(Number(quizId))
+		.then(quiz => {
+			if(quiz){
+				req.quiz = quiz;
+				next();
+			}else{
+				throw new Error('No quiz with id: '+ quizId);
+			}
+		})
+		.catch(error => next(error));
 };
 
 // GET /quizzes
@@ -53,7 +56,7 @@ exports.editQuiz = (req, res, next) => {
 		res.render(`El quiz ${req.params.quizId} no existe.`);
 	}else{
 		res.render('quizzes/edit.ejs', {quiz} );
-	}
+	}ext();
 };
 
 //PUT /quizzes/:quizId
@@ -94,7 +97,7 @@ exports.addQuiz = (req, res, next) => {
 //DELETE /quizzes/:quizId
 exports.deleteQuiz = (req, res, next) => {
 	const quiz = req.quiz;
-	quiz.destroy( {where: {id} } )
+	quiz.destroy()
 	.then(() => res.redirect('/quizzes'))
 	.catch(error => next(error));	
 };
