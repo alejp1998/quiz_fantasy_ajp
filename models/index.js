@@ -12,6 +12,18 @@ const Quiz = sequelize.define(  // define Quiz model (table quizzes)
     }
 );
 
+// Definition of the Session model:
+sequelize.define(
+        'session',
+        {
+            sid: {
+                type: Sequelize.STRING,
+                primaryKey: true
+            },
+            expires: Sequelize.DATE,
+            data: Sequelize.STRING(50000)
+        });
+
 //La inicializamos con las preguntas iniciales
 sequelize.sync() // Syncronize DB and seed if needed
     .then(() => Quiz.count())

@@ -1,8 +1,11 @@
-const sequelize = require('../models/index.js');
+const Sequelize = require('sequelize');
+const {models} = require("../models");
+const Op = Sequelize.Op;
+var ssn;
 
 //Autoload quiz asociado a :quizId
 exports.load = (req, res, next, quizId) => {
-	const quiz = sequelize.models.quiz.findByPk(Number(quizId))
+	const quiz = models.quiz.findByPk(Number(quizId))
 		.then(quiz => {
 			if(quiz){
 				req.quiz = quiz;
@@ -16,7 +19,7 @@ exports.load = (req, res, next, quizId) => {
 
 // GET /quizzes
 exports.index = (req, res, next) => {
-    sequelize.models.quiz.findAll()
+    models.quiz.findAll()
     .then(quizzes => {
         res.render('quizzes/index.ejs', {quizzes} );
     })
@@ -64,7 +67,7 @@ exports.updateQuiz = (req, res, next) => {
 	const id = req.quiz.id;
 	const {question,answer} = req.body;
 
-	sequelize.models.quiz.update( {question,answer}, { where: {id} } )
+	models.quiz.update( {question,answer}, { where: {id} } )
 	.then(() => res.redirect('/quizzes'))
 	.catch(error => next(error));
 };
@@ -88,7 +91,7 @@ exports.newQuiz = (req, res, next) => {
 exports.addQuiz = (req, res, next) => {
 	const {question, answer} = req.body;
 
-	sequelize.models.quiz.create({question, answer})
+	models.quiz.create({question, answer})
 		.then(() => res.redirect('/quizzes'))
 		.catch(next);
 };
@@ -103,32 +106,45 @@ exports.deleteQuiz = (req, res, next) => {
 };
 
 //GET /quizzes/randomplay
-/*exports.randomPlay = (req, res, next) => {
-	let i=0;
-	let id=0;
-	let quiz;
-	let score;
-	async function getAllIds() {
-		let quizzes = await sequelize.models.quiz.findAll()
-			.each(quiz=>{
-				req.session.randomPlay[i] = quiz.id;
-				i++;
-			});
-	};
+exports.randomPlay = (req,res,next) => {
+	ssn = req.session;
+	const score = ssn.score || 0;
+	if(score === 0){
+		ssn.randomPlay = [];
+	}
+	models.quiz.findOne({
+		where: {id: {[Op.notIn]: ssn.randomPlay}},
+		order: [Sequelize.fn( 'RANDOM' ),]
+	})
+		.then(quiz => {
+			if(!quiz){
+				ssn.score = 0;
+				return res.render('quizzes/random_nomore.ejs', {score});
+			}else{
+				return res.render('quizzes/random_play.ejs', {quiz,score} );
+			}
+		})
+		.catch(error => {
+			next(error);
+		});
+};
 
-	if(req.session.randomPlay.length === 0){
-		req.session.score=0;
-		req.session.randomPlay = [];
-		getAllIds();
+//GET /quizzes/randomcheck/:quizId
+exports.randomCheck = (req, res, next) => {
+	ssn = req.session;
+	const answer = req.query.answer;
+	const quiz = req.quiz;
+
+	let result = false;
+
+	if(answer.toLowerCase().trim()===quiz.answer.toLowerCase().trim()){
+		result = true;
+		ssn.score++;
+		ssn.randomPlay.push(quiz.id);
 	}
 
-	id = Math.floor(Math.random()*(ids.length));
-	sequelize.models.quiz.findByPk(ids[id])
-		.then(quiz=> {
-			score = req.session.score;
-			return res.render('/quizzes/randomplay', {quiz,score} );
-		})
-		.catch(error => next(error));
-};*/
+	const score = ssn.score;
+	res.render('quizzes/random_result.ejs', {result,score,answer} );
+};
 
 

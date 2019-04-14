@@ -17,8 +17,8 @@ router.get('/quizzes/:quizId(\\d+)/check',quizController.checkQuiz);
 router.get('/quizzes/:quizId(\\d+)',quizController.showQuiz);
 router.get('/quizzes/:quizId(\\d+)/edit',quizController.editQuiz);
 router.get('/quizzes/new',quizController.newQuiz);
-//router.get('/quizzes/randomplay',quizController.randomPlay);
-//router.get('/quizzes/randomcheck/:quizId(\\d+)',quizController.randomCheck);
+router.get('/quizzes/randomplay',quizController.randomPlay);
+router.get('/quizzes/randomcheck/:quizId(\\d+)',quizController.randomCheck);
 
 /*PUT quizzes*/
 router.put('/quizzes/:quizId(\\d+)',quizController.updateQuiz);

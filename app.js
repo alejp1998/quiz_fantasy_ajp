@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var logger = require('morgan');
+var flash = require('express-flash')
 
 var indexRouter = require('./routes/index');
 var app = express();
@@ -25,12 +26,30 @@ app.use(cookieParser());
 //Set static folder 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Almacenamiento de session en BBDD
+var sequelize = require("./models");
+var sessionStore = new SequelizeStore({
+  db: sequelize,
+  table: "session",
+  checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds. (15 minutes)
+  expiration: 4 * 60 * 60 * 1000  // The maximum age (in milliseconds) of a valid session. (4 hours)
+});
+app.use(session({
+  secret: "Quiz 2019",
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: true
+}));
+
 //Override with post and get
 app.use(methodOverride('_method', {methods: ["POST", "GET"]}));
 
 //Use partials
 app.use(partials());
 app.use('/', indexRouter);
+
+//Use flash
+app.use(flash());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
