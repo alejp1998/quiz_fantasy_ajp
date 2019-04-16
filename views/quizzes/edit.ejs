@@ -3,15 +3,19 @@
   <table class="editQuiz">
         <tr>
           <td>
-          <input type="text" placeholder="<%=quiz.question%>" class="answer" name="question" autocomplete="off">
+            <span class="question">Question:</span>
+            <input type="text" value="<%=quiz.question%>" class="answer" name="question" autocomplete="off">
           </td>
         </tr>
         <tr>
           <td>
-          <input type="text" placeholder="<%=quiz.answer%>" class="answer" name="answer" autocomplete="off">
+            <span class="answer">Answer:</span>
+            <input type="text" value="<%=quiz.answer%>" class="answer" name="answer" autocomplete="off">
           </td>
+        </tr>
+        <tr>
           <td>
-          <input type="submit" class="button" value="Edit Quiz">
+            <input type="submit" class="button" value="Edit Quiz">
           </td>
         </tr>
   </table>
