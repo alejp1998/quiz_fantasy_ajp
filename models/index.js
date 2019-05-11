@@ -1,45 +1,19 @@
-//Creamos base de datos para almacenar los quizzes comunes a todos los usuarios
+const path = require('path');
 const Sequelize = require('sequelize');
 
 const options = {logging: false};
 const sequelize = new Sequelize("sqlite:db.sqlite", options);
 
-const Quiz = sequelize.define(  // define Quiz model (table quizzes)
-    'quiz',
-    {
-        question: Sequelize.STRING,
-        answer: Sequelize.STRING
-    }
-);
+// Import the definition of the Quiz Table from quiz.js
+sequelize.import(path.join(__dirname, 'quiz'));
 
-// Definition of the Session model:
-sequelize.define(
-        'session',
-        {
-            sid: {
-                type: Sequelize.STRING,
-                primaryKey: true
-            },
-            expires: Sequelize.DATE,
-            data: Sequelize.STRING(50000)
-        });
+// Import the definition of the Users Table from user.js
+sequelize.import(path.join(__dirname,'user'));
+
+// Session
+sequelize.import(path.join(__dirname,'session'));
 
 //La inicializamos con las preguntas iniciales
-sequelize.sync() // Syncronize DB and seed if needed
-    .then(() => Quiz.count())
-    .then(count => {
-        if (count === 0) {
-            return Quiz.bulkCreate([
-                {question: "Capital of Italy", answer: "Rome"},
-                {question: "Capital of France", answer: "Paris"},
-                {question: "Capital of Spain", answer: "Madrid"},
-                {question: "Capital of Portugal", answer: "Lisbon"}
-            ])
-                .then(c => console.log(`DB filled with ${c.length} quizzes.`));
-        } else {
-            console.log(`DB exists & has ${count} quizzes.`);
-        }
-    })
-    .catch(console.log);
+sequelize.sync(); // Syncronize DB and seed if needed
 
 module.exports = sequelize;

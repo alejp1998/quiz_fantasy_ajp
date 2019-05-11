@@ -1,14 +1,15 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var createError = require('http-errors');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
+var flash = require('express-flash');
 var logger = require('morgan');
-var flash = require('express-flash')
+
 
 var indexRouter = require('./routes/index');
 var app = express();
@@ -46,10 +47,11 @@ app.use(methodOverride('_method', {methods: ["POST", "GET"]}));
 
 //Use partials
 app.use(partials());
-app.use('/', indexRouter);
-
 //Use flash
 app.use(flash());
+app.use('/', indexRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

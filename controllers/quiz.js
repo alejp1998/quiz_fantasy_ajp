@@ -65,11 +65,21 @@ exports.editQuiz = (req, res, next) => {
 //PUT /quizzes/:quizId
 exports.updateQuiz = (req, res, next) => {
 	const id = req.quiz.id;
-	const {question,answer} = req.body;
+	var quiz = req.body;
+	quiz.id = id;
 
-	models.quiz.update( {question,answer}, { where: {id} } )
-	.then(() => res.redirect('/quizzes'))
-	.catch(error => next(error));
+	models.quiz.update( quiz, { where: {id} } )
+	.then(() => {
+		req.flash('success','Quiz updated succesfully');
+		res.redirect('/quizzes');
+	}).catch(Sequelize.ValidationError, error => {
+		req.flash('error','There are errors in the form:');
+		error.errors.forEach(({message}) => req.flash('error',message));
+		res.render('quizzes/edit',{quiz});
+	}).catch(error => {
+		req.flash('error','Error updating the quiz'+error.message);
+		next(error);
+	});
 };
 
 //GET /quizzes/:quizId
@@ -84,16 +94,28 @@ exports.showQuiz = (req, res, next) => {
 
 //GET /quizzes/new
 exports.newQuiz = (req, res, next) => {
-	res.render('quizzes/new.ejs');
+	const quiz = {question: '',answer: ''};
+	res.render('quizzes/new.ejs',{quiz});
 };
 
 //POST /quizzes/
 exports.addQuiz = (req, res, next) => {
-	const {question, answer} = req.body;
+	const quiz = req.body;
 
-	models.quiz.create({question, answer})
-		.then(() => res.redirect('/quizzes'))
-		.catch(next);
+	models.quiz.create(quiz)
+		.then(() => {
+			req.flash('success', 'Quiz added succesfully');
+			res.redirect('/quizzes');
+		})
+		.catch(Sequelize.ValidationError, error => {
+			req.flash('error', 'There are errors in the form:');
+			error.errors.forEach(({message}) => req.flash('error', message));
+			res.render('quizzes/new', {quiz});
+		})
+		.catch(error => {
+			req.flash('error', 'Error adding the Quiz: ' + error.message);
+			next(error);
+		});
 };
 
 
@@ -101,8 +123,14 @@ exports.addQuiz = (req, res, next) => {
 exports.deleteQuiz = (req, res, next) => {
 	const quiz = req.quiz;
 	quiz.destroy()
-	.then(() => res.redirect('/quizzes'))
-	.catch(error => next(error));	
+	.then(() => {
+		req.flash('success', 'Quiz deleted successfully.');
+		res.redirect('/quizzes');
+	})
+	.catch(error => {
+		req.flash('error', 'Error deleting the Quiz: ' + error.message);
+		next(error);
+	});
 };
 
 //GET /quizzes/randomplay
