@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0209df75-fe3b-43f3-ae5d-ac3a3063ba71" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/quizzes/new.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/quizzes/new.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
+            <state relative-caret-position="1827">
               <caret line="87" column="18" selection-start-line="87" selection-start-column="18" selection-end-line="87" selection-end-column="19" />
             </state>
           </provider>
@@ -47,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/views/quizzes/edit.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="5" column="51" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="51" />
+              <caret line="5" column="51" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -81,10 +81,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="4">
     <option name="x" value="960" />
-    <option name="y" value="25" />
-    <option name="width" value="960" />
+    <option name="y" value="27" />
+    <option name="width" value="950" />
     <option name="height" value="1006" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -93,40 +93,14 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="quiz_fantasy_ajp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="quiz_fantasy_ajp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="quiz_fantasy_ajp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="quiz_fantasy_ajp" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="quiz_fantasy_ajp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="quiz_fantasy_ajp" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="quiz_fantasy_ajp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="quiz_fantasy_ajp" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="quizzes" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../core10-quiztips" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -177,7 +151,8 @@
       <workItem from="1555411439691" duration="66000" />
       <workItem from="1555411549566" duration="3824000" />
       <workItem from="1555415389610" duration="2850000" />
-      <workItem from="1555420245813" duration="358000" />
+      <workItem from="1555420245813" duration="958000" />
+      <workItem from="1557251797173" duration="247000" />
     </task>
     <task id="LOCAL-00001" summary="Mas añadidos">
       <created>1555110065534</created>
@@ -197,7 +172,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38690000" />
+    <option name="totallyTimeSpent" value="39537000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -209,10 +184,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1920" height="1008" extended-state="6" />
-    <editor active="true" />
+    <frame x="960" y="27" width="950" height="1006" extended-state="4" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17923036" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17907228" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -383,13 +357,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/quizzes/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -414,9 +381,16 @@
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
+        <state relative-caret-position="1827">
           <caret line="87" column="18" selection-start-line="87" selection-start-column="18" selection-end-line="87" selection-end-column="19" />
         </state>
       </provider>
@@ -424,7 +398,7 @@
     <entry file="file://$PROJECT_DIR$/views/quizzes/edit.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="5" column="51" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="51" />
+          <caret line="5" column="51" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="51" />
         </state>
       </provider>
     </entry>
