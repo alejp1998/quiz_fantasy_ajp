@@ -15,7 +15,4 @@ sequelize.import(path.join(__dirname,'user'));
 // Session
 sequelize.import(path.join(__dirname,'session'));
 
-//La inicializamos con las preguntas iniciales
-sequelize.sync(); // Syncronize DB and seed if needed
-
 module.exports = sequelize;
