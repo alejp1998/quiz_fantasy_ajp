@@ -54,8 +54,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/quiz.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="138" column="13" selection-start-line="138" selection-start-column="13" selection-end-line="138" selection-end-column="13" />
+            <state relative-caret-position="291">
+              <caret line="147" column="36" selection-start-line="147" selection-start-column="36" selection-end-line="147" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -226,7 +226,7 @@
       <workItem from="1557587557148" duration="41000" />
       <workItem from="1557590040071" duration="8173000" />
       <workItem from="1557599202642" duration="4500000" />
-      <workItem from="1557603956968" duration="7050000" />
+      <workItem from="1557603956968" duration="7352000" />
     </task>
     <task id="LOCAL-00001" summary="Mas añadidos">
       <created>1555110065534</created>
@@ -246,7 +246,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59301000" />
+    <option name="totallyTimeSpent" value="59603000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -575,8 +575,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/quiz.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="138" column="13" selection-start-line="138" selection-start-column="13" selection-end-line="138" selection-end-column="13" />
+        <state relative-caret-position="291">
+          <caret line="147" column="36" selection-start-line="147" selection-start-column="36" selection-end-line="147" selection-end-column="36" />
         </state>
       </provider>
     </entry>

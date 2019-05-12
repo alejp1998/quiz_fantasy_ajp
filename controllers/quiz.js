@@ -145,8 +145,8 @@ exports.randomPlay = (req,res,next) => {
 		order: [Sequelize.fn( 'RANDOM' ),]
 	})
 		.then(quiz => {
+			const score = ssn.score;
 			if(!quiz){
-				const score = ssn.score;
 				return res.render('quizzes/random_nomore.ejs', {score});
 			}else{
 				return res.render('quizzes/random_play.ejs', {quiz,score} );
