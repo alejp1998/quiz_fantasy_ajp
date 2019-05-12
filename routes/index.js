@@ -31,11 +31,11 @@ router.delete('/quizzes/:quizId(\\d+)',quizController.deleteQuiz);
 router.get('/signup', (req,res,next) => {
     res.render('signup.ejs');
 });
-router.get('/signin', (req,res,next) => {
-    res.render('signin.ejs');
+router.get('/login', (req,res,next) => {
+    res.render('login.ejs');
 });
 router.get('/check', userController.logIn);
-
+router.get('/logout', userController.logOut);
 /* POST Users */
 router.post('/signup', userController.newUser);
 

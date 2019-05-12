@@ -34,7 +34,7 @@ exports.newUser = (req,res,next) => {
                     models.user.create({username: username,password: hash})
                         .then(() => {
                             req.flash('success','User created succesfully');
-                            res.redirect('/signin');
+                            res.redirect('/login');
                         })
                         .catch(Sequelize.ValidationError, error => {
                             req.flash('error', 'There are errors in the form:');
@@ -54,24 +54,28 @@ exports.newUser = (req,res,next) => {
     });
 };
 
-//GET /signin
+//GET /login
 exports.logIn = (req,res,next) => {
+    if(req.session.user){
+        req.flash('error','You are logged in');
+        return res.redirect('/');
+    }
     const username = req.query.username;
     const password = req.query.password;
     models.user.findOne({where: {username: username}})
     .then(user => {
         if(!user){
             req.flash('error','Nombre de usuario incorrecto');
-            res.redirect('/signin');
+            res.redirect('/login');
         }else{
             bCrypt.compare(password, user.password, (err, result) => {
                 if(result){
-                    req.session.username = username;
+                    req.session.user = user;
                     req.flash('success','User logged in succesfully');
                     res.redirect('/');
                 }else{
                     req.flash('error','Incorrect password');
-                    res.redirect('/signin');
+                    res.redirect('/login');
                 }
             });
         }
@@ -79,4 +83,16 @@ exports.logIn = (req,res,next) => {
         req.flash('error','Error logging in: ' + error.message);
         next(error);
     });
+};
+
+//GET /logout
+exports.logOut = (req,res,next) => {
+    if(!req.session.user){
+        req.flash('error','You are not logged in');
+        return res.redirect('/login');
+    }else{
+        req.session.user = null;
+        req.flash('success','User logged out successfully');
+        return res.redirect('/login');
+    }
 };

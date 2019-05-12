@@ -1,7 +1,9 @@
 const Sequelize = require('sequelize');
 const {models} = require("../models");
 const Op = Sequelize.Op;
+const paginate = require('../helpers/paginate').paginate;
 var ssn;
+
 
 //Autoload quiz asociado a :quizId
 exports.load = (req, res, next, quizId) => {
@@ -19,10 +21,24 @@ exports.load = (req, res, next, quizId) => {
 
 // GET /quizzes
 exports.index = (req, res, next) => {
-    models.quiz.findAll()
-    .then(quizzes => {
-        res.render('quizzes/index.ejs', {quizzes} );
-    })
+    models.quiz.count()
+    .then(count => {
+    	//Pagination
+		const page_items = 5;
+		//The page shown is in the query
+		const pageno = Number(req.query.pageno) || 1;
+		//Create String with HTML to render pagination buttons
+		res.locals.paginate_control = paginate(count, items_per_page, pageno, req.url);
+
+		const findOptions = {
+			offset: page_items*(pageno-1),
+			limit: page_items
+		};
+
+		return models.quiz.findAll(findOptions);
+    }).then(quizzes => {
+    	res.render('quizzes/index.ejs',{quizzes});
+	})
     .catch(error => next(error));
 };
 

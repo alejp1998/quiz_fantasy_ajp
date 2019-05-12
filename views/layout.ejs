@@ -25,17 +25,16 @@
 <nav class="main" id="mainNav" role="navigation">
 
     <a href="/">Home</a>
-    <% if (true){ %>
-        <a href="/signin">Sign In</a>
+    <% if (!session.user){ %>
+        <a href="/login">Log In</a>
         <a href="/signup">Sign Up</a>
-        <a href="/quizzes/randomplay">Play</a>
-        <a href="/quizzes">All Quizzes</a>
-        <a href="/credits">Credits</a>
     <% }else{ %>
+        <a href="/">Home</a>
         <a href="/quizzes/randomplay">Play</a>
         <a href="/quizzes">All Quizzes</a>
-        <a href="/credits">Credits</a>
+        <a href="/logout">Log Out</a>
     <% } %>
+    <a href="/credits">Credits</a>
 
 </nav>
 
@@ -76,6 +75,10 @@
     <div>
         <%- body %>
     </div>
+
+    <% if (locals.paginate_control) { %>
+        <%- paginate_control %>
+    <% } %>
 </section>
 
 <footer class="main" id="mainFooter">
