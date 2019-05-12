@@ -23,12 +23,20 @@
 </header>
 
 <nav class="main" id="mainNav" role="navigation">
+
     <a href="/">Home</a>
-    <a href="/signin">Sign In</a>
-    <a href="/signup">Sign Up</a>
-    <a href="/quizzes/randomplay">Play</a>
-    <a href="/quizzes">All Quizzes</a>
-    <a href="/credits">Credits</a>
+    <% if (true){ %>
+        <a href="/signin">Sign In</a>
+        <a href="/signup">Sign Up</a>
+        <a href="/quizzes/randomplay">Play</a>
+        <a href="/quizzes">All Quizzes</a>
+        <a href="/credits">Credits</a>
+    <% }else{ %>
+        <a href="/quizzes/randomplay">Play</a>
+        <a href="/quizzes">All Quizzes</a>
+        <a href="/credits">Credits</a>
+    <% } %>
+
 </nav>
 
 <section class="main" id="mainSection">

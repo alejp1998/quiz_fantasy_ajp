@@ -59,7 +59,7 @@ exports.editQuiz = (req, res, next) => {
 		res.render(`El quiz ${req.params.quizId} no existe.`);
 	}else{
 		res.render('quizzes/edit.ejs', {quiz} );
-	}ext();
+	}
 };
 
 //PUT /quizzes/:quizId
@@ -77,7 +77,7 @@ exports.updateQuiz = (req, res, next) => {
 		error.errors.forEach(({message}) => req.flash('error',message));
 		res.render('quizzes/edit',{quiz});
 	}).catch(error => {
-		req.flash('error','Error updating the quiz'+error.message);
+		req.flash('error','Error updating the quiz: '+error.message);
 		next(error);
 	});
 };

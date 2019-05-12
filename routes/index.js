@@ -34,10 +34,10 @@ router.get('/signup', (req,res,next) => {
 router.get('/signin', (req,res,next) => {
     res.render('signin.ejs');
 });
+router.get('/check', userController.logIn);
 
 /* POST Users */
 router.post('/signup', userController.newUser);
-router.post('/signin', userController.logIn);
 
 
 /*GET Credits*/

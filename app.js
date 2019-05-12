@@ -10,7 +10,6 @@ var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var flash = require('express-flash');
 var logger = require('morgan');
 
-
 var indexRouter = require('./routes/index');
 var app = express();
 
@@ -50,8 +49,6 @@ app.use(partials());
 //Use flash
 app.use(flash());
 app.use('/', indexRouter);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
