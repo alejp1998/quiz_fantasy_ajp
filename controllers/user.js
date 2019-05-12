@@ -64,8 +64,8 @@ exports.logIn = (req,res,next) => {
             req.flash('error','Nombre de usuario incorrecto');
             res.redirect('/signin');
         }else{
-            bCrypt.compare(password, user.password, (err, res) => {
-                if(res){
+            bCrypt.compare(password, user.password, (err, result) => {
+                if(result){
                     req.session.username = username;
                     req.flash('success','User logged in succesfully');
                     res.redirect('/');
