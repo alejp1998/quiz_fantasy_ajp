@@ -41,6 +41,15 @@ app.use(session({
   saveUninitialized: true
 }));
 
+// Dynamic Helper:
+app.use((req, res, next) => {
+  // To use req.session in the views
+  res.locals.session = req.session;
+  // To use req.url in the views
+  res.locals.url = req.url;
+  next();
+});
+
 //Override with post and get
 app.use(methodOverride('_method', {methods: ["POST", "GET"]}));
 
