@@ -136,8 +136,8 @@ exports.deleteQuiz = (req, res, next) => {
 //GET /quizzes/randomplay
 exports.randomPlay = (req,res,next) => {
 	ssn = req.session;
-	const score = ssn.score || 0;
-	if(score === 0){
+	ssn.score = ssn.score || 0;
+	if(!ssn.score){
 		ssn.randomPlay = [];
 	}
 	models.quiz.findOne({
@@ -146,13 +146,14 @@ exports.randomPlay = (req,res,next) => {
 	})
 		.then(quiz => {
 			if(!quiz){
-				ssn.score = 0;
+				const score = ssn.score;
 				return res.render('quizzes/random_nomore.ejs', {score});
 			}else{
 				return res.render('quizzes/random_play.ejs', {quiz,score} );
 			}
 		})
 		.catch(error => {
+			req.flash('error', 'Error asking next question: ' + error.message);
 			next(error);
 		});
 };
