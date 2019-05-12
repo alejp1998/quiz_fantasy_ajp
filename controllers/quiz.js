@@ -28,7 +28,7 @@ exports.index = (req, res, next) => {
 		//The page shown is in the query
 		const pageno = Number(req.query.pageno) || 1;
 		//Create String with HTML to render pagination buttons
-		res.locals.paginate_control = paginate(count, items_per_page, pageno, req.url);
+		res.locals.paginate_control = paginate(count, page_items, pageno, req.url);
 
 		const findOptions = {
 			offset: page_items*(pageno-1),
