@@ -189,6 +189,9 @@ exports.randomCheck = (req, res, next) => {
 	}
 
 	const score = ssn.score;
+	if(!result){
+		ssn.score = 0;
+	}
 	res.render('quizzes/random_result.ejs', {result,score,answer} );
 };
 
