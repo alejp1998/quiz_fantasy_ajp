@@ -66,7 +66,7 @@ const paginate = (totalItems, itemsPerPage, currentPage, url, param_name) => {
         }
     }
 
-    // Next pages: betwenn the middle pages and the last page
+    // Next pages: between the middle pages and the last page
     if (currentPage + neighbours < total - 1) {
         const n = Math.trunc(( total + currentPage + neighbours + 1) / 2);
         url = addPagenoToUrl(url, n, param_name);
