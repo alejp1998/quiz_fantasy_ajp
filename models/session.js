@@ -1,5 +1,4 @@
 // Definition of the Session model:
-
 module.exports = (sequelize,DataTypes) => {
     return sequelize.define(
         'session',
