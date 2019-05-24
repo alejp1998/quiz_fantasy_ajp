@@ -20,7 +20,9 @@
 
 <header class="main" id="mainHeader">
     <h1>Quiz Fantasy</h1>
-    <h4>User: <%= session.user.username || 'Anonymous' %></h4>
+    <%if(session.user){%>
+        <h4>User: <%= session.user.username%></h4>
+    <% } %>
 </header>
 
 <nav class="main" id="mainNav" role="navigation">
