@@ -20,6 +20,7 @@
 
 <header class="main" id="mainHeader">
     <h1>Quiz Fantasy</h1>
+    <h4>User: <%= session.user.username || 'Anonymous' %></h4>
 </header>
 
 <nav class="main" id="mainNav" role="navigation">
@@ -29,7 +30,6 @@
         <a href="/login">Log In</a>
         <a href="/signup">Sign Up</a>
     <% }else{ %>
-        <a href="/">Home</a>
         <a href="/quizzes/randomplay">Play</a>
         <a href="/quizzes">Quizzes</a>
         <a href="/logout">Log Out</a>

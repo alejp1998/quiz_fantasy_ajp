@@ -22,9 +22,11 @@ sequelize.import(path.join(__dirname,'session'));
 const {quiz,tip,user} = sequelize.models;
 
 //Relationship between quizzes and user
+
 //Authors
 quiz.belongsTo(user, {as: 'author', foreignKey: 'authorId'});
 user.hasMany(quiz, {as: 'quizzes', foreignKey: 'authorId'});
+
 //Favorites
 user.belongsToMany(quiz, {as: 'favoriteQuizzes', foreignKey: 'userId', through: 'favorites'});
 quiz.belongsToMany(user, {as: 'fans', foreignKey: 'quizId',through: 'favorites'});
