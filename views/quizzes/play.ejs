@@ -14,3 +14,31 @@
         </tr>
   </table>
 </form>
+
+<table class="tips">
+    <tr>
+        <td>
+            <h3>Quiz Tips:</h3>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <% if(session.user){ %>
+                <% include ../tips/new %>
+            <% } %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <% var tips = quiz.tips; %>
+            <% var quizId = quiz.id; %>
+            <% var quizAuthorId = quiz.authorId; %>
+        </td>
+    </tr>
+            <% include ../tips/index %>
+    <tr>
+        <td>
+            <a href="/quizzes" class="button">Go Back</a>
+        </td>
+    </tr>
+</table>

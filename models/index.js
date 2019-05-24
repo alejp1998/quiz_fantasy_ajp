@@ -21,18 +21,21 @@ sequelize.import(path.join(__dirname,'session'));
 //Charge models
 const {quiz,tip,user} = sequelize.models;
 
-//Relationship between quizzes and user
 
-//Authors
+// Relation 1-to-N between User and Quiz:
+user.hasMany(quiz, {foreignKey: 'authorId'});
 quiz.belongsTo(user, {as: 'author', foreignKey: 'authorId'});
-user.hasMany(quiz, {as: 'quizzes', foreignKey: 'authorId'});
 
 //Favorites
 user.belongsToMany(quiz, {as: 'favoriteQuizzes', foreignKey: 'userId', through: 'favorites'});
 quiz.belongsToMany(user, {as: 'fans', foreignKey: 'quizId',through: 'favorites'});
 
 //Relationship between quizzes and tips
-tip.belongsTo(quiz, {as: 'quiz', foreignKey: 'quizId'});
-quiz.hasMany(tip,{as: 'tips', foreignKey: 'quizId'});
+tip.belongsTo(quiz);
+quiz.hasMany(tip);
+
+// Relation 1-to-N between User and Tips:
+user.hasMany(tip, {foreignKey: 'authorId'});
+tip.belongsTo(user, {as: 'author', foreignKey: 'authorId'});
 
 module.exports = sequelize;

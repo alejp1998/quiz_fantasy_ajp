@@ -1,4 +1,19 @@
 <h2 class="show">Show Quiz <%=quiz.id%></h2>
+    
     <p class="question">Question: <%=quiz.question%></p>
-    <p class="answer">Answer: <%=quiz.answer%></p>
-    <a href="/quizzes" class="button">Go Back</a>
+    <p class="answer">Answer: <%=quiz.answer%></p> 
+
+<h3>Quiz Tips:</h3>
+ 
+<% if(session.user){ %>
+	<% include ../tips/new %>
+<% } %>
+
+<% var tips = quiz.tips; %>
+<% var quizId = quiz.id; %>
+<% var quizAuthorId = quiz.authorId; %>
+
+
+<% include ../tips/index %>
+
+<a href="/quizzes" class="button">Go Back</a>	

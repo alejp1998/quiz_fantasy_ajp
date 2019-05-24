@@ -1,4 +1,6 @@
-<h1>All Quizzes</h1>
+<h1 class="title">All Quizzes</h1>
+
+
 <table class="quizzes>">
   <% for (var i in quizzes) { %>
   <% var quiz = quizzes[i]; %>
@@ -12,6 +14,20 @@
     </tr>
   <% } %>
 </table>
-<div class="quizzesOptions">
+
+<h3 class="quizzesOptions">
     <a href="/quizzes/new" class="button">New Quiz</a>
-</div>
+</h3>
+
+<h3 class="right">
+  <tr>
+    <form method="get" action="<%= url %>">
+      <td>
+        <input type="text" name="search" value="<%= locals.search || '' %>" placeholder="Lost?" autocomplete="off" />
+      </td>
+      <td>
+        <input type="submit" value="Search">
+      </td>
+    </form>
+  </tr>
+</h3>

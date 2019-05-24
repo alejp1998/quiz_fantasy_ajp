@@ -14,3 +14,17 @@
         <input type="submit" class="itemNarrow" id="send" value="Check">
     </div>
 </form>
+
+<h3>Quiz Tips:</h3>
+
+<% if(session.user){ %>
+	<% include ../tips/new %>
+<% } %>
+
+<% var tips = quiz.tips; %>
+<% var quizId = quiz.id; %>
+<% var quizAuthorId = quiz.authorId; %>
+
+<% include ../tips/index %>
+
+<a href="/quizzes" class="button">Go Back</a>

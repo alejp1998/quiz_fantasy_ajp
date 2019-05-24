@@ -7,21 +7,45 @@ var ssn;
 
 //Autoload quiz asociado a :quizId
 exports.load = (req, res, next, quizId) => {
-	const quiz = models.quiz.findByPk(Number(quizId))
-		.then(quiz => {
-			if(quiz){
-				req.quiz = quiz;
-				next();
-			}else{
-				throw new Error('No quiz with id: '+ quizId);
-			}
-		})
-		.catch(error => next(error));
+	
+    const options = {
+        include: [
+            {
+                model: models.tip,
+                include: [{model: models.user, as: 'author'}]
+            },
+            {model: models.user, as: 'author'}
+        ]
+    };
+
+    models.quiz.findByPk(quizId, options)
+    .then(quiz => {
+        if (quiz) {
+            req.quiz = quiz;
+            next();
+        } else {
+            throw new Error('There is no quiz with id=' + quizId);
+        }
+    })
+    .catch(error => next(error));
 };
 
 // GET /quizzes
 exports.index = (req, res, next) => {
-    models.quiz.count()
+
+	let countOptions = {};
+
+	//Search quizzes
+	const search = req.query.search || '';
+	if(search){
+		//Normalizamos texto sustituyendo los blancos por %
+		const search_like = "%" + search.replace(/ +/g,"%") + "%";
+		//Creamos la expresion de la busqueda 
+		countOptions.where = {question: { [Op.like]: search_like}};
+	}
+
+	//Si no hemos buscado nada, muestra todos los quizzes
+    models.quiz.count(countOptions)
     .then(count => {
     	//Pagination
 		const page_items = 5;
@@ -31,13 +55,14 @@ exports.index = (req, res, next) => {
 		res.locals.paginate_control = paginate(count, page_items, pageno, req.url);
 
 		const findOptions = {
+			...countOptions,
 			offset: page_items*(pageno-1),
 			limit: page_items
 		};
 
 		return models.quiz.findAll(findOptions);
     }).then(quizzes => {
-    	res.render('quizzes/index.ejs',{quizzes});
+    	res.render('quizzes/index.ejs',{quizzes,search});
 	})
     .catch(error => next(error));
 };
