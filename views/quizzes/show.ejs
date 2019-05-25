@@ -1,9 +1,15 @@
 <div class="right">
-	<small> [Quiz by: <%= quiz.author ? quiz.author.username : "Anonymous" %>] </small>
+	<small> [Quiz by: 
+		<%if(session.user){ %> 
+			<a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
+		<% }else{ %>
+			Anonymous 
+		<% } %>
+	 ]</small>
 </div>
 
 <h2 class="show">Show Quiz <%=quiz.id%></h2>
-    
+    <% include ../upvotes/_arrowup.ejs %>
     <p class="question">Question: <%=quiz.question%></p>
     <p class="answer">Answer: <%=quiz.answer%></p> 
 
@@ -20,4 +26,4 @@
 
 <% include ../tips/index %>
 
-<a href="/quizzes" class="button">Go Back</a>	
+<a href="/goback" class="button">Go Back</a>	

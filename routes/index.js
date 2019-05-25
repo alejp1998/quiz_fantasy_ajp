@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var quizController = require('../controllers/quiz.js');
 var tipController = require('../controllers/tip.js');
+var upvoteController = require('../controllers/upvote.js');
 var userController = require('../controllers/user.js');
 var sessionController = require('../controllers/session.js');
+
 
 /*------- AUTOLOADS --------*/
 
@@ -18,8 +20,20 @@ router.param('tipId',tipController.load);
 router.get('/', function(req, res, next) {
   res.render('index.ejs');
 });
+//Redirecciona a la pagina desde la que se realizo la solicitud
+router.get('/goback',(req,res,next) => {
+    const url = req.session.backUrl || "/";
+    delete req.session.backUrl;
+    res.redirect(url);
+});
+//Guarda las rutas que no terminen en new,edit,play,session o un Id
+router.get(['/','/author','/users','/users/:id(\\+d)/quizzes','/quizzes'], (req,res,next) => {
+    req.session.backUrl = req.url;
+    next();
+});
 
 /*------- QUIZZES ROUTES --------*/
+
 /* GET own quizzes */
 router.get('/users/:userId(\\d+)/quizzes', quizController.index);
 
@@ -50,6 +64,7 @@ router.get('/signup', (req,res,next) => {
 router.get('/login', (req,res,next) => {
     res.render('login.ejs');
 });
+router.get('/users', userController.index);
 router.get('/check', userController.logIn);
 router.get('/logout', userController.logOut);
 router.get('/users/:userId(\\d+)',sessionController.loginRequired, userController.show);
@@ -60,8 +75,11 @@ router.post('/signup', userController.newUser);
 /* PUT USERS */
 router.put('/users/:userId(\\d+)', sessionController.loginRequired, sessionController.adminOrMyselfRequired,
     userController.update);
+router.put('/users/:userId(\\d+)/follow', sessionController.loginRequired, userController.follow);
+/* DELETE USERS */
 router.delete('/users/:userId(\\d+)', sessionController.loginRequired, sessionController.adminOrMyselfRequired,
     userController.destroy);
+router.delete('/users/:userId(\\d+)/unfollow', sessionController.loginRequired, userController.unfollow);
 
 /*------- TIPS ROUTES --------*/
 
@@ -81,6 +99,13 @@ router.delete('/quizzes/:quizId(\\d+)/tips/:tipId', sessionController.loginRequi
 router.delete('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)', sessionController.loginRequired,
     tipController.adminOrAuthorRequired, tipController.destroy);
 
+/*------- UPVOTES ROUTES --------*/
+
+/* PUT Upvotes */
+router.put('/users/:userId(\\d+)/favs/:quizId(\\d+)', sessionController.loginRequired , 
+    sessionController.adminOrMyselfRequired , upvoteController.add);
+router.delete('/users/:userId(\\d+)/favs/:quizId(\\d+)', sessionController.loginRequired, 
+    sessionController.adminOrMyselfRequired , upvoteController.quit);
 
 /*------- CREDITS ROUTES --------*/
 

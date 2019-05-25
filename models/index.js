@@ -27,8 +27,8 @@ user.hasMany(quiz, {foreignKey: 'authorId'});
 quiz.belongsTo(user, {as: 'author', foreignKey: 'authorId'});
 
 //Favorites
-user.belongsToMany(quiz, {as: 'favoriteQuizzes', foreignKey: 'userId', through: 'favorites'});
-quiz.belongsToMany(user, {as: 'fans', foreignKey: 'quizId',through: 'favorites'});
+user.belongsToMany(quiz, {as: 'upvoted', foreignKey: 'userId', through: 'upvotes', otherKey: 'quizId'});
+quiz.belongsToMany(user, {as: 'fans', foreignKey: 'quizId',through: 'upvotes', otherKey: 'userId'});
 
 //Relationship between quizzes and tips
 tip.belongsTo(quiz);
@@ -37,5 +37,9 @@ quiz.hasMany(tip);
 // Relation 1-to-N between User and Tips:
 user.hasMany(tip, {foreignKey: 'authorId'});
 tip.belongsTo(user, {as: 'author', foreignKey: 'authorId'});
+
+//Followers & following
+user.belongsToMany(user, {as: 'followedBy',foreignKey: 'followerId',through: 'followers',otherKey:'followingId'});
+user.belongsToMany(user, {as: 'following',foreignKey: 'followingId',through: 'followers',otherKey:'followerId'});
 
 module.exports = sequelize;

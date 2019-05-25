@@ -26,6 +26,17 @@ app.use(cookieParser());
 //Set static folder 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Uso de https en heroku
+if(app.get('env') === 'production'){
+  app.use((req,res,next) => {
+    if(req.headers['x-forwarded-proto'] !== 'https'){
+      res.redirect('https://' + req.get('Host') + req.url);
+    }else{
+      next();
+    }
+  });
+}
+
 //Almacenamiento de session en BBDD
 var sequelize = require("./models");
 var sessionStore = new SequelizeStore({

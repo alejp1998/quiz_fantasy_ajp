@@ -11,18 +11,27 @@
 </ul>
 
 <% if (session.user) { %>
-    <p>
-        <% if (session.user.isAdmin || session.user.id === user.id) { %>
-            <a href="/users/<%= user.id %>/edit"class="button">Edit</a>
-        <% } %>
+    <table>
+        <tr>
+            <td> 
+                <a href="/users/<%= user.id %>/follow?_method=PUT"class="button">Follow</a>
+            </td>
+            <td>    
+                <a href="/users/<%= user.id %>/unfollow?_method=DELETE"class="button">Unfollow</a>
+            </td>
+            <% if (session.user.isAdmin || session.user.id === user.id) { %>
+                <td>
+                    <a href="/users/<%= user.id %>/edit"class="button">Edit</a>
+                </td>
+            <% } %>
 
-        <% if (session.user.isAdmin && session.user.id !== user.id) { %>
-            <a href="/users/<%= user.id %>?_method=DELETE"
-                        onClick="return confirm('Delete user: <%= user.username %>');"
-                    class="button">Delete
-            </a>
-        <% } %>
-    </p>
+            <% if (session.user.isAdmin && session.user.id !== user.id) { %>
+                <td>
+                    <a href="/users/<%= user.id %>?_method=DELETE" onClick="return confirm('Delete user: <%= user.username %>');" class="button">Delete</a>
+                </td>
+            <% } %>
+        </tr>
+    </table>
 <% } %>
 
-<a href="/" class="button">Go back</a>
+<a href="/goback" class="button">Go back</a>

@@ -14,7 +14,8 @@ exports.load = (req, res, next, quizId) => {
                 model: models.tip,
                 include: [{model: models.user, as: 'author'}]
             },
-            {model: models.user, as: 'author'}
+            {model: models.user, as: 'author'},
+            {model: models.user, as: 'fans'}
         ]
     };
 
@@ -50,7 +51,7 @@ exports.index = (req, res, next) => {
 
 	let countOptions = {
         where: {},
-        include: []
+        include: [{model: models.user, as: 'fans'}]
     };
 	let title = '';
 
@@ -149,12 +150,25 @@ exports.updateQuiz = (req, res, next) => {
 
 //GET /quizzes/:quizId
 exports.showQuiz = (req, res, next) => {
-	const quiz = req.quiz;
-	if(!quiz){
-		res.render(`El quiz ${req.params.quizId} no existe.`);
-	}else{
+	const {quiz} = req;
+	new Promise((resolve,reject) => {
+		if(req.session.user){
+			resolve(
+				req.quiz.getFans({where: {id: req.session.user.id}})
+				.then(fans => {
+					if(fans.length>0){
+						req.quiz.upvoted = true;
+					}
+				})
+			);	
+		}else{
+			resolve();
+		}
+	})
+	.then( () => {
 		res.render('quizzes/show.ejs', {quiz} );
-	}
+	})
+	.catch(error => next(error));
 };
 
 //GET /quizzes/new
@@ -194,7 +208,7 @@ exports.deleteQuiz = (req, res, next) => {
 	quiz.destroy()
 	.then(() => {
 		req.flash('success', 'Quiz deleted successfully.');
-		res.redirect('/quizzes');
+		res.redirect('/goback');
 	})
 	.catch(error => {
 		req.flash('error', 'Error deleting the Quiz: ' + error.message);

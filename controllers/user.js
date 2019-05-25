@@ -2,6 +2,7 @@
 const bCrypt = require('bcrypt');
 const Sequelize = require("sequelize");
 const {models} = require("../models");
+const paginate = require('../helpers/paginate').paginate;
 
 // Autoload the user with id equals to :userId
 exports.load = (req, res, next, userId) => {
@@ -16,6 +17,37 @@ exports.load = (req, res, next, userId) => {
             }
         })
         .catch(error => next(error));
+};
+
+// GET /users
+exports.index = (req, res, next) => {
+    let countOptions = {
+        where: {},
+        include: []
+    };
+    
+    models.user.count()
+    .then(count => {
+        //Pagination
+        const page_items = 5;
+        //The page shown is in the query
+        const pageno = Number(req.query.pageno) || 1;
+        //Create String with HTML to render pagination buttons
+        res.locals.paginate_control = paginate(count, page_items, pageno, req.url);
+
+        const findOptions = {
+            ...countOptions,
+            offset: page_items*(pageno-1),
+            limit: page_items,
+            order: ['username']
+        };
+
+        return models.user.findAll(findOptions);
+    })
+    .then(users => {
+        res.render('users/index', {users});
+    })
+    .catch(error => next(error));
 };
 
 // GET /users/:userId
@@ -168,5 +200,33 @@ exports.destroy = (req, res, next) => {
         res.redirect('/goback');
     })
     .catch(error => next(error));
+};
+
+//PUT /users/:userId/follow
+exports.follow = (req,res,next) => {
+    let {user} = req;
+    //Show magic methods
+    //console.log(Object.keys(user.__proto__));
+
+    return user.addFollowedBy(req.session.user)
+    .then(() => {
+        res.redirect('/goback');
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+
+//PUT /users/:userId/unfollow
+exports.unfollow = (req,res,next) => {
+    let {user} = req;
+
+    return user.removeFollowedBy(req.session.user)
+    .then(() => {
+        res.redirect('/goback');
+    })
+    .catch(error => {
+        console.log(error);
+    });
 };
 

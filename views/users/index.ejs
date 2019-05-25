@@ -1,0 +1,37 @@
+<h2>Users</h2>
+
+<table>
+    <% for (var i in users) { %>
+    <tr>
+        <td>
+            <a href="/users/<%= users[i].id %>" ><%= users[i].username %></a>
+            <%= users[i].isAdmin ? "(admin)" : "" %>
+        </td>
+
+        <% if (session.user) { %>
+            <% if(users[i].id!=session.user.id){%>
+                <td>
+                    <a href="/users/<%= users[i].id %>/follow?_method=PUT"class="button">Follow</a>
+                </td>
+                <td>
+                    <a href="/users/<%= users[i].id %>/unfollow?_method=DELETE"class="button">Unfollow</a>
+                </td>  
+            <% } %>            
+            <% if (session.user.isAdmin || session.user.id === users[i].id) { %>
+                <td>
+                    <a href="/users/<%= users[i].id %>/edit"class="button">edit</a>
+                </td>
+            <%  } %>
+
+            <% if (session.user.isAdmin && session.user.id !== users[i].id) { %>
+                <td>
+                    <a href="/users/<%= users[i].id %>?_method=DELETE"
+                       onClick="return confirm('Delete user: <%= users[i].username %>');"
+                        class="button">delete</a>
+                </td>
+            <% } %>
+
+        <% } %>
+    </tr>
+    <%  } %>
+</table>

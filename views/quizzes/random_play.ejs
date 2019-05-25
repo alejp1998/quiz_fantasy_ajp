@@ -5,14 +5,14 @@
 </div>
 
 <form method="get" action="/quizzes/randomcheck/<%= quiz.id %>">
-    <p>        Question: <b><%= quiz.question %></b>
-    </p>
-
+    <p>Question: <b><%= quiz.question %></b></p>
+    
     <div class="wideRow">
         <input type="text" class="itemWide" id="answer" name="answer"
                value="" placeholder="Answer" autocomplete="off"/>
         <input type="submit" class="itemNarrow" id="send" value="Check">
     </div>
+    
 </form>
 
 <h3>Quiz Tips:</h3>

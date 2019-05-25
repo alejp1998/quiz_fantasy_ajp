@@ -7,7 +7,7 @@
 
     <tr>
       <div>
-          <td><a href="/quizzes/<%=quiz.id%>/play" class="question"><%=quiz.question%></a></td>
+          <td><a href="/quizzes/<%=quiz.id%>/play" class="question"><%=quiz.question%> <%if(quiz.fans.length != 0){ %> [<%= quiz.fans.length %>] <% } %> </a></td>
           <td><a href="/quizzes/<%=quiz.id%>" class="button">Show</a></td>
 
           <% if(isAdmin || title){%>
