@@ -1,15 +1,20 @@
-<h1 class="title">All Quizzes</h1>
-
+<h1 class="title"><%= title || 'All Quizzes' %></h1>
 
 <table class="quizzes>">
   <% for (var i in quizzes) { %>
   <% var quiz = quizzes[i]; %>
+  <% var isAdmin = session.user && session.user.isAdmin; %>
+
     <tr>
       <div>
           <td><a href="/quizzes/<%=quiz.id%>/play" class="question"><%=quiz.question%></a></td>
           <td><a href="/quizzes/<%=quiz.id%>" class="button">Show</a></td>
+
+          <% if(isAdmin || title){%>
           <td><a href="/quizzes/<%=quiz.id%>/edit" class="button">Edit</a></td>
           <td><a href="/quizzes/<%=quiz.id%>?_method=DELETE" class="button" onclick="return confirm('Delete: <%=quiz.question%>?');">Delete</a></td>
+          <% } %>
+
       </div>
     </tr>
   <% } %>

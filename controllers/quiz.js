@@ -30,10 +30,29 @@ exports.load = (req, res, next, quizId) => {
     .catch(error => next(error));
 };
 
+// MW that allows actions only if the user logged in is admin or is the author of the quiz.
+exports.adminOrAuthorRequired = (req, res, next) => {
+
+    const isAdmin  = !!req.session.user.isAdmin;
+    const isAuthor = req.quiz.authorId === req.session.user.id;
+
+    if (isAdmin || isAuthor) {
+        next();
+    } else {
+        console.log('Prohibited operation: The logged in user is not the author of the quiz, nor an administrator.');
+        res.send(403);
+    }
+};
+
+
 // GET /quizzes
 exports.index = (req, res, next) => {
 
-	let countOptions = {};
+	let countOptions = {
+        where: {},
+        include: []
+    };
+	let title = '';
 
 	//Search quizzes
 	const search = req.query.search || '';
@@ -41,7 +60,12 @@ exports.index = (req, res, next) => {
 		//Normalizamos texto sustituyendo los blancos por %
 		const search_like = "%" + search.replace(/ +/g,"%") + "%";
 		//Creamos la expresion de la busqueda 
-		countOptions.where = {question: { [Op.like]: search_like}};
+		countOptions.where.question = {question: { [Op.like]: search_like}};
+	}
+
+	if(req.user){
+		countOptions.where.authorId = req.user.id;
+		title = req.user.username + "'s Quizzes";
 	}
 
 	//Si no hemos buscado nada, muestra todos los quizzes
@@ -62,7 +86,7 @@ exports.index = (req, res, next) => {
 
 		return models.quiz.findAll(findOptions);
     }).then(quizzes => {
-    	res.render('quizzes/index.ejs',{quizzes,search});
+    	res.render('quizzes/index.ejs',{quizzes,search,title});
 	})
     .catch(error => next(error));
 };
@@ -135,13 +159,17 @@ exports.showQuiz = (req, res, next) => {
 
 //GET /quizzes/new
 exports.newQuiz = (req, res, next) => {
-	const quiz = {question: '',answer: ''};
+	const quiz = {question: '', answer: ''};
 	res.render('quizzes/new.ejs',{quiz});
 };
 
 //POST /quizzes/
 exports.addQuiz = (req, res, next) => {
-	const quiz = req.body;
+	const {question,answer} = req.body;
+
+	const authorId = req.session.user && req.session.user.id || 0;
+
+	const quiz = {question, answer, authorId};
 
 	models.quiz.create(quiz)
 		.then(() => {

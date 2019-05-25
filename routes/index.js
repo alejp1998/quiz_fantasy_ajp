@@ -8,6 +8,7 @@ var sessionController = require('../controllers/session.js');
 /*------- AUTOLOADS --------*/
 
 /*Autoload for routes with param quizId*/
+router.param('userId', userController.load);
 router.param('quizId',quizController.load);
 router.param('tipId',tipController.load);
 
@@ -19,22 +20,26 @@ router.get('/', function(req, res, next) {
 });
 
 /*------- QUIZZES ROUTES --------*/
+/* GET own quizzes */
+router.get('/users/:userId(\\d+)/quizzes', quizController.index);
 
 /* GET quizzes */
 router.get('/quizzes', quizController.index);
 router.get('/quizzes/:quizId(\\d+)/play',quizController.playQuiz);
 router.get('/quizzes/:quizId(\\d+)/check',quizController.checkQuiz);
 router.get('/quizzes/:quizId(\\d+)',quizController.showQuiz);
-router.get('/quizzes/:quizId(\\d+)/edit',sessionController.loginRequired, quizController.editQuiz);
+router.get('/quizzes/:quizId(\\d+)/edit', sessionController.loginRequired, quizController.adminOrAuthorRequired, 
+    quizController.editQuiz);
 router.get('/quizzes/new',sessionController.loginRequired, quizController.newQuiz);
 router.get('/quizzes/randomplay',quizController.randomPlay);
 router.get('/quizzes/randomcheck/:quizId(\\d+)', quizController.randomCheck);
 /*PUT quizzes*/
-router.put('/quizzes/:quizId(\\d+)',sessionController.loginRequired, quizController.updateQuiz);
+router.put('/quizzes/:quizId(\\d+)',sessionController.loginRequired, quizController.adminOrAuthorRequired, 
+    quizController.updateQuiz);
 /*POST quizzes*/
 router.post('/quizzes',sessionController.loginRequired, quizController.addQuiz);
 /*DELETE quizzes*/
-router.delete('/quizzes/:quizId(\\d+)',sessionController.adminRequired, quizController.deleteQuiz);
+router.delete('/quizzes/:quizId(\\d+)', quizController.adminOrAuthorRequired, quizController.deleteQuiz);
 
 /*------- USERS ROUTES --------*/
 
@@ -47,8 +52,16 @@ router.get('/login', (req,res,next) => {
 });
 router.get('/check', userController.logIn);
 router.get('/logout', userController.logOut);
+router.get('/users/:userId(\\d+)',sessionController.loginRequired, userController.show);
+router.get('/users/:userId(\\d+)/edit', sessionController.loginRequired, sessionController.adminOrMyselfRequired,
+    userController.edit);
 /* POST Users */
 router.post('/signup', userController.newUser);
+/* PUT USERS */
+router.put('/users/:userId(\\d+)', sessionController.loginRequired, sessionController.adminOrMyselfRequired,
+    userController.update);
+router.delete('/users/:userId(\\d+)', sessionController.loginRequired, sessionController.adminOrMyselfRequired,
+    userController.destroy);
 
 /*------- TIPS ROUTES --------*/
 

@@ -18,6 +18,12 @@ exports.load = (req, res, next, userId) => {
         .catch(error => next(error));
 };
 
+// GET /users/:userId
+exports.show = (req, res, next) => {
+    const {user} = req;
+    res.render('users/show', {user});
+};
+
 //POST /signup
 exports.newUser = (req,res,next) => {
     const username = req.body.username;
@@ -85,6 +91,55 @@ exports.logIn = (req,res,next) => {
     });
 };
 
+// GET /users/:userId/edit
+exports.edit = (req, res, next) => {
+
+    const {user} = req;
+
+    res.render('users/edit', {user});
+};
+
+
+// PUT /users/:userId
+exports.update = (req, res, next) => {
+
+    let {user} = req;
+    let fields_to_update = [];
+    const username = req.body.username;
+    const password = req.body.password;
+    const password2 = req.body.password2;
+
+
+    if(username){
+        user.username  = username; // edition not allowed
+        fields_to_update.push('username');
+    }
+
+    // ¿Cambio el password?
+    if (password) {
+        if(password===password2){
+            console.log('Updating password');
+            user.password = bCrypt.hashSync(password,10);
+            fields_to_update.push('password');
+        }else{
+            req.flash('error','Passwords do not match');
+            res.redirect('/goback');
+        }
+    }
+
+    user.save({fields: fields_to_update})
+    .then(user => {
+        req.flash('success', 'User updated successfully.');
+        res.redirect('/users/' + user.id);
+    })
+    .catch(Sequelize.ValidationError, error => {
+        req.flash('error', 'There are errors in the form:');
+        error.errors.forEach(({message}) => req.flash('error', message));
+        res.render('users/edit', {user});
+    })
+    .catch(error => next(error));
+};
+
 //GET /logout
 exports.logOut = (req,res,next) => {
     if(!req.session.user){
@@ -96,3 +151,22 @@ exports.logOut = (req,res,next) => {
         return res.redirect('/login');
     }
 };
+
+// DELETE /users/:userId
+exports.destroy = (req, res, next) => {
+
+    req.user.destroy()
+    .then(() => {
+
+        // Deleting logged user.
+        if (req.session.user && req.session.user.id === req.user.id) {
+            // Close the user session
+            delete req.session.user;
+        }
+
+        req.flash('success', 'User deleted successfully.');
+        res.redirect('/goback');
+    })
+    .catch(error => next(error));
+};
+

@@ -20,8 +20,8 @@
 
 <header class="main" id="mainHeader">
     <h1>Quiz Fantasy</h1>
-    <%if(session.user){%>
-        <h4>User: <%= session.user.username%></h4>
+    <% if(session.user){ %>
+        <a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
     <% } %>
 </header>
 
@@ -29,12 +29,13 @@
 
     <a href="/">Home</a>
     <% if (!session.user){ %>
-        <a href="/login">Log In</a>
-        <a href="/signup">Sign Up</a>
+        <a href="/login">LogIn</a>
+        <a href="/signup">SignUp</a>
     <% }else{ %>
         <a href="/quizzes/randomplay">Play</a>
         <a href="/quizzes">Quizzes</a>
-        <a href="/logout">Log Out</a>
+        <a href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
+        <a href="/logout">LogOut</a>
     <% } %>
     <a href="/credits">Credits</a>
 

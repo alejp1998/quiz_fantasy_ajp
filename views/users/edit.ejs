@@ -1,0 +1,29 @@
+<h1>Edit User:</h1>
+
+<form method="post" action="/users/<%= user.id %>?_method=PUT">
+    <table class="signup">
+	    <tr>
+	        <td>
+	            <span class="username">New Username:</span>
+	            <input type="text" class="username" name="username" autocomplete="off">
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>
+	            <span class="password">New Password:</span>
+	            <input type="password" class="password" name="password" autocomplete="off">
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>
+	            <span class="password">Repeat New Password:</span>
+	            <input type="password" class="password" name="password2" autocomplete="off">
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>
+	            <input type="submit" class="button" value="Sign Up">
+	        </td>
+	    </tr>
+	</table>
+</form>
