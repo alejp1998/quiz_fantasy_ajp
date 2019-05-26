@@ -48,6 +48,7 @@ exports.adminOrAuthorRequired = (req, res, next) => {
 
 // GET /quizzes
 exports.index = (req, res, next) => {
+	req.session.nquizzes = 0;
 
 	let countOptions = {
         where: {},
@@ -61,7 +62,7 @@ exports.index = (req, res, next) => {
 		//Normalizamos texto sustituyendo los blancos por %
 		const search_like = "%" + search.replace(/ +/g,"%") + "%";
 		//Creamos la expresion de la busqueda 
-		countOptions.where.question = {question: { [Op.like]: search_like}};
+		countOptions.where = {question: { [Op.like]: search_like}};
 	}
 
 	if(req.user){
@@ -72,6 +73,7 @@ exports.index = (req, res, next) => {
 	//Si no hemos buscado nada, muestra todos los quizzes
     models.quiz.count(countOptions)
     .then(count => {
+    	req.session.nquizzes = count;
     	//Pagination
 		const page_items = 5;
 		//The page shown is in the query
@@ -223,17 +225,21 @@ exports.randomPlay = (req,res,next) => {
 	if(!ssn.score){
 		ssn.randomPlay = [];
 	}
+
+	nquizzes = req.session.nquizzes;
+
 	models.quiz.findOne({
 		where: {id: {[Op.notIn]: ssn.randomPlay}},
 		order: [Sequelize.fn( 'RANDOM' ),]
 	})
+
 		.then(quiz => {
 			const score = ssn.score;
 			if(!quiz){
 				ssn.score = 0;
 				return res.render('quizzes/random_nomore.ejs', {score});
 			}else{
-				return res.render('quizzes/random_play.ejs', {quiz,score} );
+				return res.render('quizzes/random_play.ejs', {quiz,score,nquizzes} );
 			}
 		})
 		.catch(error => {

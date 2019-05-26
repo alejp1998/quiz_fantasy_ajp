@@ -1,12 +1,18 @@
 <div class="content">
+    <div class="columns">
+        <div class="column">
+             <h2 class="subtitle is-4">Random Play</h2>
+        </div>
 
-    <h2 class="subtitle is-4">Random Play</h2>
+        <div class="column is-two-thirds">
+            <progress class="progress is-success" value="<%= score %>" max="<%= nquizzes %>"></progress>
+        </div>
+    </div>
 
     <div class="columns">
         <div class="column is-two-thirds">
             <form method="get" action="/quizzes/randomcheck/<%=quiz.id%>">
                 <ul>
-
                     <li>
                         <span class="tag is-dark is-medium"><%=quiz.question%></span>
                         <input type="text" placeholder="Answer" class="input is-primary" name="answer" autocomplete="off">

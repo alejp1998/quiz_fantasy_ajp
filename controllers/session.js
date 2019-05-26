@@ -3,7 +3,8 @@ exports.loginRequired = (req, res, next) => {
     if (req.session.user) {
         next();
     } else {
-        res.redirect('/session?redir=' + (req.param('redir') || req.url));
+        req.flash('error','Login Required');
+        res.redirect('/login');
     }
 };
 
