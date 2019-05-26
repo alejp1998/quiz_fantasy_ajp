@@ -25,7 +25,7 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bulma-start": "0.0.3",
-    "chart": "^0.1.2",
+    "chart.js": "^2.8.0",
     "connect-session-sequelize": "^6.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",

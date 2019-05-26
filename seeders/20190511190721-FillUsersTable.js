@@ -12,8 +12,33 @@ module.exports = {
         createdAt: new Date(), updatedAt: new Date()
       },
       {
-        username: 'alejp1998',
-        password: bCrypt.hashSync('Ale.757779',10),
+        username: 'ale',
+        password: bCrypt.hashSync('ale',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'lucy',
+        password: bCrypt.hashSync('lucy',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'anthony',
+        password: bCrypt.hashSync('anthony',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'john',
+        password: bCrypt.hashSync('john',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'rudolph',
+        password: bCrypt.hashSync('rudolph',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'margaret',
+        password: bCrypt.hashSync('margaret',10),
         createdAt: new Date(), updatedAt: new Date()
       }
     ]);

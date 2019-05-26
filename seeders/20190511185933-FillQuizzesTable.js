@@ -5,98 +5,206 @@ module.exports = {
 
     return queryInterface.bulkInsert('quizzes', [
       {
-          question: 'Quiz1',
-          answer: '1',
+          question: 'Who invented the telephone?',
+          answer: 'Bell',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz2',
-          answer: '2',
+          question: 'Which nail grows fastest?',
+          answer: 'Middle',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz3',
-          answer: '3',
+          question: 'What temperature does water boil at?',
+          answer: '100C',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz4',
-          answer: '4',
+          question: 'Who discovered penicillin?',
+          answer: 'Fleming',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz5',
-          answer: '5',
+          question: 'What Spanish artist said he would eat his wife when she died? ',
+          answer: 'Dali',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz6',
-          answer: '6',
+          question: 'Who wrote Julius Caesar, Macbeth and Hamlet?',
+          answer: 'Shakespeare',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz7',
-          answer: '7',
+          question: ' Who wrote Lazarillo de Tormes?',
+          answer: 'anonymous',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz8',
-          answer: '8',
+          question: 'What did the crocodile swallow in Peter Pan',
+          answer: 'alarm clock',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz9',
-          answer: '9',
+          question: 'Where was Lope de Vega born?',
+          answer: 'Madrid',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz10',
-          answer: '10',
+          question: 'Who did Lady Diana Spencer marry?',
+          answer: 'Prince Charles',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz11',
-          answer: '11',
+          question: 'Where is Mulhacen?',
+          answer: 'Granada Spain',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz12',
-          answer: '12',
+          question: 'How many states are there in the United States of America?',
+          answer: '50',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz13',
-          answer: '13',
+          question: 'Which river passes through Madrid?',
+          answer: 'Manzanares',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz14',
-          answer: '14',
+          question: 'Which German city is famous for the perfume it produces? ',
+          answer: 'Cologne',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz15',
-          answer: '15',
+          question: 'Who did Prince Rainier of Monaco marry?',
+          answer: 'Grace Kelly',
           createdAt: new Date(),
           updatedAt: new Date()
       },
       {
-          question: 'Quiz16',
-          answer: '16',
+          question: 'What year did the Spanish Civil War end?',
+          answer: '1939',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'When did the First World War start?',
+          answer: '1914',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What did Joseph Priesley discover in 1774?',
+          answer: 'Oxygen',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'Where is the smallest bone in the body',
+          answer: 'ear',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'Which is the only mammal that can’t jump',
+          answer: 'elephant',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What does the roman numeral C represent?',
+          answer: '100',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What colour is a panda?',
+          answer: 'black and white',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What nationality was Chopin?',
+          answer: 'Polish',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What’s the best known artificial international language?',
+          answer: 'esperanto',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'Who lived at 221B, Baker Street, London?',
+          answer: 'Sherlock Holmes',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'Who cut Van Gogh’s ear?',
+          answer: 'he did',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'Where did Salvador Dali live?',
+          answer: 'Figueras',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'Who painted the Mona Lisa?',
+          answer: 'Da Vinci',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'How many dots are there on two dice?',
+          answer: '42',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What horoscope sign has a crab?',
+          answer: 'Cancer',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What are the first three words of the bible?',
+          answer: 'In the beginning',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'Where was Christopher Columbus born?',
+          answer: 'Genoa',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'When did the American Civil War end?',
+          answer: '1865',
+          createdAt: new Date(),
+          updatedAt: new Date()
+      },
+      {
+          question: 'What did the 7 dwarves do for a job?',
+          answer: 'miners',
           createdAt: new Date(),
           updatedAt: new Date()
       }

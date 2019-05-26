@@ -3,6 +3,7 @@ var router = express.Router();
 var quizController = require('../controllers/quiz.js');
 var tipController = require('../controllers/tip.js');
 var upvoteController = require('../controllers/upvote.js');
+var statsController = require('../controllers/stats.js');
 var userController = require('../controllers/user.js');
 var sessionController = require('../controllers/session.js');
 
@@ -106,6 +107,12 @@ router.put('/users/:userId(\\d+)/favs/:quizId(\\d+)', sessionController.loginReq
     sessionController.adminOrMyselfRequired , upvoteController.add);
 router.delete('/users/:userId(\\d+)/favs/:quizId(\\d+)', sessionController.loginRequired, 
     sessionController.adminOrMyselfRequired , upvoteController.quit);
+
+/*------- STATS ROUTES --------*/
+
+/* GET Stats */
+router.get('/stats', statsController.stats);
+router.get('/userstats/:userId(\\d+)', sessionController.loginRequired , statsController.userstats);
 
 /*------- CREDITS ROUTES --------*/
 

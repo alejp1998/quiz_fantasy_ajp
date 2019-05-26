@@ -107,7 +107,7 @@ exports.playQuiz = (req, res, next) => {
 //GET /quizzes/:quizId/check
 exports.checkQuiz = (req, res, next) => {
 	let result;
-	let {user} = req.session || null;
+	let user = req.session.user;
 	const quiz = req.quiz;
 	const answer = req.query.answer;
 	if(!quiz){
@@ -116,15 +116,18 @@ exports.checkQuiz = (req, res, next) => {
 	if(quiz.answer.toLowerCase().trim()===answer.toLowerCase().trim()){
 		result = "Correct";
 		if(user){
-			user.points++;
+			user.points = user.points+1;
 		}
 	}else{
 		result = "Incorrect";
 		if(user){
-			user.fails++;
+			user.fails = user.fails+1;
 		}
 	}
-	return [user.save(),res.render('quizzes/check.ejs', {quiz,result} )];
+	return models.user.update(user, { where: {id: user.id} } )
+	.then( () => {
+		res.render('quizzes/check.ejs', {quiz,result} );
+	});
 };
 
 //GET /quizzes/:quizId/edit
@@ -248,7 +251,7 @@ exports.randomPlay = (req,res,next) => {
 				if(user){
 					user.points+=score;
 				}
-				return [user.save() , res.render('quizzes/random_nomore.ejs', {score} )];
+				return res.render('quizzes/random_nomore.ejs', {score} );
 			}else{
 				return res.render('quizzes/random_play.ejs', { quiz , score , nquizzes } );
 			}
@@ -282,7 +285,7 @@ exports.randomCheck = (req, res, next) => {
 		}
 		ssn.score = 0;
 	}
-	return [user.save() , res.render('quizzes/random_result.ejs', {result,score,answer} )];
+	return res.render('quizzes/random_result.ejs', {result,score,answer} );
 };
 
 
