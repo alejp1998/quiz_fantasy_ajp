@@ -4,44 +4,74 @@
     <meta charset="utf-8">
     <title>Quiz Fantasy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/mystyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 
 <body>
 
-<div class="box">
-    <div class="columns">
-        <div class="column is-three-quarters">
-            <h1 class="title is-1">Quiz Fantasy</h1>
-        </div>
-        <div class="column">
-            <h1 class="subtitle is-2">
-                <% if(session.user){ %>
-                    <a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
-                <% } %>
-            </h2>
-        </div>
-    </div>
-</div>
+<nav class="navbar is-warning is-bold is-large" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand has-dropdown is-hoverable">
+    <a class="navbar-item" href="/">
+      <h1 class="title is-1">Quiz Fantasy</h1>
+    </a>
+  </div>
 
-<div class="box">
-    <h2 class="subtitle is-3">
-        <a href="/">Home</a>
-        <% if (!session.user){ %>
-            <a class="" href="/login">LogIn</a>
-            <a href="/signup">SignUp</a>
-        <% }else{ %>
-            <a href="/quizzes/randomplay">Play</a>
-            <a href="/quizzes">Quizzes</a>
-            <a href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
-            <a href="/users">Quizzersss</a>
-            <a href="/logout">LogOut</a>
-        <% } %>
-        <a href="/credits">Credits</a>
-    </h2>
-</div>
+  <div class="navbar-menu has-dropdown is-active">
+
+    <div class="navbar-start">
+      <a class="navbar-item" href="/">Home</a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/users">Users</a>
+        <div class="navbar-dropdown is-boxed">
+            <% if (!session.user){ %>
+                <a class="navbar-item" href="/login">LogIn</a>
+                <a class="navbar-item" href="/signup">SignUp</a>
+            <% }else{ %>
+                <a class="navbar-item" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
+                <a class="navbar-item" href="/logout">LogOut</a>
+            <% } %>
+        </div>
+      </div>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/quizzes">Quizzes</a>
+        <div class="navbar-dropdown is-boxed">
+            <a class="navbar-item" href="/quizzes/randomplay">Play</a>
+            <% if (session.user){ %>
+              <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
+            <% } %>
+        </div>
+      </div>
+
+      <a class="navbar-item" href="/credits">Credits</a>
+
+    </div>
+
+    <div class="navbar-end">
+
+      <div class="navbar-item">
+        <div class="field is-grouped">
+
+          <p class="control">
+            <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" target="_blank" href="https://twitter.com/intent/tweet?text=QuizFantasy: the best entertaiment website in Mars &amp;hashtags=quiz2019&amp;url=https://quiz-fantasy-ajp.herokuapp.com/&amp;via=ale_j98">
+              <span class="icon">
+                <i class="fab fa-twitter"></i>
+              </span>
+              <span>
+                Tweet
+              </span>
+            </a>
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</nav>
 
 <section class="box">
     <% if (messages.info) { %>
@@ -77,13 +107,13 @@
         </div>
     <% } %>
 
-    <div>
+    <div class="box">
         <%- body %>
+        <% if (locals.paginate_control) { %>
+          <%- paginate_control %>
+        <% } %>
     </div>
-
-    <% if (locals.paginate_control) { %>
-        <%- paginate_control %>
-    <% } %>
+    
 </section>
 
 </div>

@@ -1,10 +1,15 @@
-<h2 class="check"><%=result%></h2>
-  <p class="checkQuiz">
+<div class="content">
+	<h2 class="subtitle is-4"><%=result%></h2>
     <%if(result=="Correct"){%>
-      <p>Congratulations</p>
-      <a href="/quizzes" class="button">Go Back</a>
+	    <div class="notification is-success">
+	      <h3 class="subtitle is-5">Congratulations</h3>
+	  	</div>
+	  	<a href="/quizzes" class="button is-info">Go Back</a>
     <%}else{%>
-      <p>Wrong Answer</p>
-      <a href="/quizzes/<%=quiz.id%>/play" class="button" name="answer">Try Again</a>
-      <a href="/quizzes" class="button">Go Back</a>
+    	<div class="notification is-danger">
+      		<h3 class="subtitle is-5">Wrong Answer</h3>
+      	</div>
+      	<a href="/quizzes/<%=quiz.id%>/play" class="button is-warning" name="answer">Try Again</a>
+      	<a href="/quizzes" class="button is-info">Go Back</a>
     <%}%>
+</div>

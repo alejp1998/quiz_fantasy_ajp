@@ -1,38 +1,36 @@
-<h1 class="title"><%= title || 'All Quizzes' %></h1>
+<div class="content">
 
-<table class="quizzes>">
-  <% for (var i in quizzes) { %>
-  <% var quiz = quizzes[i]; %>
-  <% var isAdmin = session.user && session.user.isAdmin; %>
+  <div class="columns">
+    <div class="column">
+      <h1 class="title"><%= title || 'All Quizzes' %></h1>
+    </div>
+    <div class="column">
+      <a href="/quizzes/new" class="button is-success is-medium">New Quiz</a>
+    </div>
+    <div class="column is-half">
+      <h3 class="subtitle is-6">
+        <form method="get" action="<%= url %>">
+            <input type="text" class="input is-info" name="search" value="<%= locals.search || '' %>" placeholder="Lost?" autocomplete="off" />
+            <input type="submit" class="button is-info" value="Search">
+        </form>
+      </h3>
+    </div>
+  </div>
 
-    <tr>
-      <div>
-          <td><a href="/quizzes/<%=quiz.id%>/play" class="question"><%=quiz.question%> <%if(quiz.fans.length != 0){ %> [<%= quiz.fans.length %>] <% } %> </a></td>
-          <td><a href="/quizzes/<%=quiz.id%>" class="button">Show</a></td>
+  <ul>
+    <% for (var i in quizzes) { %>
+    <% var quiz = quizzes[i]; %>
+    <% var isAdmin = session.user && session.user.isAdmin; %>
+        <li>
+
+          <a href="/quizzes/<%=quiz.id%>/play" class="subtitle is-5"><%=quiz.question%> <%if(quiz.fans.length != 0){ %> [<%= quiz.fans.length %>] <% }else{ %> [0] <% } %></a>
+          <a href="/quizzes/<%=quiz.id%>" class="button is-primary is-small">Show</a>
 
           <% if(isAdmin || title){%>
-          <td><a href="/quizzes/<%=quiz.id%>/edit" class="button">Edit</a></td>
-          <td><a href="/quizzes/<%=quiz.id%>?_method=DELETE" class="button" onclick="return confirm('Delete: <%=quiz.question%>?');">Delete</a></td>
+          <a href="/quizzes/<%=quiz.id%>/edit" class="button is-warning is-small">Edit</a>
+          <a href="/quizzes/<%=quiz.id%>?_method=DELETE" class="button is-danger is-small" onclick="return confirm('Delete: <%=quiz.question%>?');">Delete</a>
           <% } %>
 
-      </div>
-    </tr>
-  <% } %>
-</table>
-
-<h3 class="quizzesOptions">
-    <a href="/quizzes/new" class="button">New Quiz</a>
-</h3>
-
-<h3 class="right">
-  <tr>
-    <form method="get" action="<%= url %>">
-      <td>
-        <input type="text" name="search" value="<%= locals.search || '' %>" placeholder="Lost?" autocomplete="off" />
-      </td>
-      <td>
-        <input type="submit" value="Search">
-      </td>
-    </form>
-  </tr>
-</h3>
+        </li>
+    <% } %>
+  </ul>
