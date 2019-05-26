@@ -9,6 +9,7 @@ exports.stats = (req,res,next) => {
 
 }
 
+// GET /userstats/:userId 
 exports.userstats = (req,res,next) => {
-	
+
 }
