@@ -1,13 +1,10 @@
+<div class="content">
+  <h2 class="subtitle is-6">Edit Tip</h2>
 
-<form method="POST" action="/quizzes/<%= quiz.id %>/tips/<%= tip.id %>?_method=PUT">
+  <form method="POST" action="/quizzes/<%= quiz.id %>/tips/<%= tip.id %>?_method=PUT">
 
-    <div class="wideRow">
-
-        <span class="itemNarrow">Edit Tip:</span>
-
-        <input type="text" class="itemWide" id="tip" name="text" value="<%=tip.text%>" placeholder="Tip" autocomplete="off" />
-
-        <button type="submit" class="itemNarrow">Update Tip</button>
-    </div>
-
-</form>
+        <span class="tag is-dark is-medium">Tip Text:</span>
+        <input type="text" value="<%=tip.text%>" class="input is-primary" name="text" autocomplete="off">
+        <input type="submit" class="button is-warning" value="Edit Tip">    
+  </form>
+</div>

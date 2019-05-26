@@ -1,5 +1,5 @@
 
-<img id="arrowup<%=quiz.id%>" width="30px" height="30px"><%= quiz.fans.length %> <img/>
+<img id="arrowup<%=quiz.id%>" width="30px" height="30px"><img/>
 
 <br/>
 
@@ -22,7 +22,6 @@
 				if(request.readyState == 4 && request.status == 200){
 					img.src = state ? "/images/arrowup.png" : "/images/cross.png";
 					state = !state;
-					quiz.fans.length = quiz.fans.length;
 				}
 			};
 			request.send();

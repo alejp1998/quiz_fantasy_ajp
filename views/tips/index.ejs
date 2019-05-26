@@ -1,47 +1,37 @@
+<div class="content">
+
+  <ul>
+      <% for (var i in tips) { %>
+           <% var tip = tips[i]; %>
+
+          <% var accepted = tip.accepted; %>
+          <% var isAdmin = session.user && session.user.isAdmin; %>
+          <% var isQuizAuthor = session.user && quizAuthorId && quizAuthorId === session.user.id; %>
+
+          <% var isTipAuthor = session.user && tip.authorId === session.user.id; %>
 
 
-<ul>
-    <% for (var i in tips) { %>
-         <% var tip = tips[i]; %>
+          <% if (accepted || isAdmin || isQuizAuthor) { %>
 
-        <% var accepted = tip.accepted; %>
-        <% var isAdmin = session.user && session.user.isAdmin; %>
-        <% var isQuizAuthor = session.user && quizAuthorId && quizAuthorId === session.user.id; %>
+              <li>
+                  <span class="tag is-success is-small"><%= tip.author.username %></span>
+                  <p class="has-text-white is-small"> <%= tip.text %> </p>
 
-        <% var isTipAuthor = session.user && tip.authorId === session.user.id; %>
+                  <% if (!accepted && (isAdmin || isQuizAuthor)) { %>
+                      <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/accept?_method=PUT" class="button is-warning is-small">Accept</a>
+                  <% } %>
 
+                  <% if (isAdmin || isTipAuthor) { %>
+                          <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/edit" class="button is-warning is-small">Edit</a>
+                  <% } %>
 
-    <% if (accepted || isAdmin || isQuizAuthor) { %>
+                  <% if (isAdmin || isQuizAuthor) { %>
+                          <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>?_method=DELETE" class="button is-danger is-small">Delete</a>
+                  <% } %>
+              </li>
+                        
+          <% } %>
 
-              <table class="tips">
-                  <tr>
-                      <td>
-                        <span class="autor"><%= tip.author.username %></span>
-                      </td>
-                      <td>
-                        <p>: <%= tip.text %></p>
-                      </td>
-                      <td>
-                        <% if (!accepted && (isAdmin || isQuizAuthor)) { %>
-
-                                <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/accept?_method=PUT"
-                                       class="button">Accept</a>
-
-                        <% } %>
-
-                        <% if (isAdmin || isTipAuthor) { %>
-                                <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/edit"
-                                class="button">Edit</a>
-                        <% } %>
-
-                        <% if (isAdmin || isQuizAuthor) { %>
-                                <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>?_method=DELETE">
-                        <% } %>
-
-                      </td>
-                  </tr>
-              </table>
-        <% } %>
-
-    <% } %>
-</ul>
+      <% } %>
+  </ul>
+</div>

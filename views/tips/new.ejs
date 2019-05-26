@@ -1,14 +1,8 @@
+<div class="content">
+  <form method="POST" action="/quizzes/<%= quiz.id %>/tips/">
 
-
-<form method="POST" action="/quizzes/<%= quiz.id %>/tips/">
-
-    <div class="tips">
-
-        <span class="itemNarrow">New Tip:</span>
-
-    <input type="text" class="itemWide" id="tip" name="text" value="" placeholder="Tip" autocomplete="off" />
-
-    <button type="submit" class="itemNarrow">Add</button>
-    </div>
-
-</form>
+        <span class="tag is-dark is-small">Tip Text:</span>
+        <input type="text" value="" class="input is-warning is-small" name="text" autocomplete="off">
+        <input type="submit" class="button is-success is-small" value="Add">    
+  </form>
+</div>
