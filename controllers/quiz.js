@@ -107,6 +107,7 @@ exports.playQuiz = (req, res, next) => {
 //GET /quizzes/:quizId/check
 exports.checkQuiz = (req, res, next) => {
 	let result;
+	let {user} = req.session || null;
 	const quiz = req.quiz;
 	const answer = req.query.answer;
 	if(!quiz){
@@ -114,10 +115,16 @@ exports.checkQuiz = (req, res, next) => {
 	}
 	if(quiz.answer.toLowerCase().trim()===answer.toLowerCase().trim()){
 		result = "Correct";
+		if(user){
+			user.points++;
+		}
 	}else{
 		result = "Incorrect";
+		if(user){
+			user.fails++;
+		}
 	}
-	return res.render('quizzes/check.ejs', {quiz,result} );
+	return [user.save(),res.render('quizzes/check.ejs', {quiz,result} )];
 };
 
 //GET /quizzes/:quizId/edit
@@ -220,6 +227,7 @@ exports.deleteQuiz = (req, res, next) => {
 
 //GET /quizzes/randomplay
 exports.randomPlay = (req,res,next) => {
+	let {user} = req.session || null;
 	ssn = req.session;
 	ssn.score = ssn.score || 0;
 	if(!ssn.score){
@@ -237,9 +245,12 @@ exports.randomPlay = (req,res,next) => {
 			const score = ssn.score;
 			if(!quiz){
 				ssn.score = 0;
-				return res.render('quizzes/random_nomore.ejs', {score});
+				if(user){
+					user.points+=score;
+				}
+				return [user.save() , res.render('quizzes/random_nomore.ejs', {score} )];
 			}else{
-				return res.render('quizzes/random_play.ejs', {quiz,score,nquizzes} );
+				return res.render('quizzes/random_play.ejs', { quiz , score , nquizzes } );
 			}
 		})
 		.catch(error => {
@@ -250,6 +261,7 @@ exports.randomPlay = (req,res,next) => {
 
 //GET /quizzes/randomcheck/:quizId
 exports.randomCheck = (req, res, next) => {
+	let {user} = req.session || null;
 	ssn = req.session;
 	const answer = req.query.answer;
 	const quiz = req.quiz;
@@ -264,9 +276,13 @@ exports.randomCheck = (req, res, next) => {
 
 	const score = ssn.score;
 	if(!result){
+		if(user){
+			user.points+=score;
+			user.fails--;
+		}
 		ssn.score = 0;
 	}
-	res.render('quizzes/random_result.ejs', {result,score,answer} );
+	return [user.save() , res.render('quizzes/random_result.ejs', {result,score,answer} )];
 };
 
 
