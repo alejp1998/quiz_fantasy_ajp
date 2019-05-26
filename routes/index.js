@@ -41,7 +41,7 @@ router.get('/users/:userId(\\d+)/quizzes', quizController.index);
 router.get('/quizzes', quizController.index);
 router.get('/quizzes/:quizId(\\d+)/play',quizController.playQuiz);
 router.get('/quizzes/:quizId(\\d+)/check',quizController.checkQuiz);
-router.get('/quizzes/:quizId(\\d+)',quizController.showQuiz);
+router.get('/quizzes/:quizId(\\d+)',sessionController.loginRequired,quizController.showQuiz);
 router.get('/quizzes/:quizId(\\d+)/edit', sessionController.loginRequired, quizController.adminOrAuthorRequired, 
     quizController.editQuiz);
 router.get('/quizzes/new',sessionController.loginRequired, quizController.newQuiz);

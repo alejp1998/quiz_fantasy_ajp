@@ -1,15 +1,9 @@
-<h1>
-    End of Random Play:
-</h1>
+<div class="notification is-success">
 
-<div>
-    Successful answers = <span id="score"><%= score %></span>
-</div>
+    <h2 class="subtitle is-4">End of Random Play</h2>
+    <h3 class="subtitle is-5">Successful answers = <strong><%= score %></strong></h3>
+    <p>You answered all questions. You are a champion.</p>
+    <a class="button is-info" href="/quizzes">Go Back</a>
+    <a class="button is-danger" href="/quizzes/randomplay">Restart</a>
 
-<p>
-    You answered all questions. You are a champion.
-</p>
-
-<p>
-    <a href="/quizzes"><button>Go Back</button></a>
-</p>
+</div>   

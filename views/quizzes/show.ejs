@@ -1,29 +1,55 @@
-<div class="right">
-	<small> [Quiz by: 
-		<%if(session.user){ %> 
-			<a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
-		<% }else{ %>
-			Anonymous 
-		<% } %>
-	 ]</small>
-</div>
+<div class="content">
+	<div class="columns">
+		<div class="column is-two-thirds">
+			<h2 class="subtitle is-4">Show Quiz</h2>
+		</div>
 
-<h2 class="show">Show Quiz <%=quiz.id%></h2>
-    <% include ../upvotes/_arrowup.ejs %>
-    <p class="question">Question: <%=quiz.question%></p>
-    <p class="answer">Answer: <%=quiz.answer%></p> 
+		<div class="column">
+			<small> [Quiz by: 
+				<%if(session.user){ %> 
+					<a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
+				<% }else{ %>
+					Anonymous 
+				<% } %>
+				<span class="tag is-info is-medium"><% include ../upvotes/_arrowup.ejs %></span>
+			 ]</small>
+		</div>
+	</div>
 
-<h3>Quiz Tips:</h3>
- 
-<% if(session.user){ %>
-	<% include ../tips/new %>
-<% } %>
+    <div class="columns">
+        <div class="column is-two-thirds">
+            <form method="get" action="/quizzes/<%=quiz.id%>/check">
+                <ul>
 
-<% var tips = quiz.tips; %>
-<% var quizId = quiz.id; %>
-<% var quizAuthorId = quiz.authorId; %>
+                    <li>
+                        <span class="tag is-dark is-medium">Question:</span>
+                        <p class="subtitle is-4"><%= quiz.question %></p>
+                    </li>
+                    <li>
+                        <span class="tag is-success is-medium">Answer:</span>
+                        <p class="subtitle is-4"><%= quiz.answer %></p>
+                        <a href="/goback" class="button is-info">Go Back</a>
+                    </li>
+                    
+                </ul>
+            </form>
+        </div>
+        
+        <div class="column">
+            <div class="box has-background-info">
+                <h3 class="subtitle is-5">Quiz Tips:</h3>
 
+                <% if(session.user){ %>
+                    <% include ../tips/new %>
+                <% } %>
 
-<% include ../tips/index %>
+                <% var tips = quiz.tips; %>
+                <% var quizId = quiz.id; %>
+                <% var quizAuthorId = quiz.authorId; %>
 
-<a href="/goback" class="button">Go Back</a>	
+                 <% include ../tips/index %>
+
+            </div>
+        </div> 
+    </div>
+</div>   

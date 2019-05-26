@@ -230,6 +230,7 @@ exports.randomPlay = (req,res,next) => {
 		.then(quiz => {
 			const score = ssn.score;
 			if(!quiz){
+				ssn.score = 0;
 				return res.render('quizzes/random_nomore.ejs', {score});
 			}else{
 				return res.render('quizzes/random_play.ejs', {quiz,score} );

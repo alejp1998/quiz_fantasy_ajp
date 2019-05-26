@@ -1,44 +1,38 @@
-<h2 class="play">Play Quiz <%=quiz.id%></h2>
-<form method="get" action="/quizzes/<%=quiz.id%>/check">
-  <table class="playQuiz">
-        <tr>
-            <td>
-                <span class="question"><%=quiz.question%></span>
-                <input type="text" placeholder="Answer" class="answer" name="answer" autocomplete="off">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" class="button" value="Check">
-            </td>
-        </tr>
-  </table>
-</form>
+<div class="content">
 
-<table class="tips">
-    <tr>
-        <td>
-            <h3>Quiz Tips:</h3>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <% if(session.user){ %>
-                <% include ../tips/new %>
-            <% } %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <% var tips = quiz.tips; %>
-            <% var quizId = quiz.id; %>
-            <% var quizAuthorId = quiz.authorId; %>
-        </td>
-    </tr>
-            <% include ../tips/index %>
-    <tr>
-        <td>
-            <a href="/goback" class="button">Go Back</a>
-        </td>
-    </tr>
-</table>
+    <h2 class="subtitle is-4">Play Quiz</h2>
+
+    <div class="columns">
+        <div class="column is-two-thirds">
+            <form method="get" action="/quizzes/<%=quiz.id%>/check">
+                <ul>
+
+                    <li>
+                        <span class="tag is-dark is-medium"><%=quiz.question%></span>
+                        <input type="text" placeholder="Answer" class="input is-primary" name="answer" autocomplete="off">
+                        <input type="submit" class="button is-success" value="Check">
+                        <a href="/goback" class="button is-info">Go Back</a>
+                    </li>
+                    
+                </ul>
+            </form>
+        </div>
+        
+        <div class="column">
+            <div class="box has-background-info">
+                <h3 class="subtitle is-5">Quiz Tips:</h3>
+
+                <% if(session.user){ %>
+                    <% include ../tips/new %>
+                <% } %>
+
+                <% var tips = quiz.tips; %>
+                <% var quizId = quiz.id; %>
+                <% var quizAuthorId = quiz.authorId; %>
+
+                 <% include ../tips/index %>
+
+            </div>
+        </div> 
+    </div>
+</div>   

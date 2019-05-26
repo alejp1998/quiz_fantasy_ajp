@@ -1,30 +1,38 @@
-<h1>    Random Play:
-</h1>
+<div class="content">
 
-<div>    Successful answers = <span id="score"><%= score %></span>
-</div>
+    <h2 class="subtitle is-4">Random Play</h2>
 
-<form method="get" action="/quizzes/randomcheck/<%= quiz.id %>">
-    <p>Question: <b><%= quiz.question %></b></p>
-    
-    <div class="wideRow">
-        <input type="text" class="itemWide" id="answer" name="answer"
-               value="" placeholder="Answer" autocomplete="off"/>
-        <input type="submit" class="itemNarrow" id="send" value="Check">
+    <div class="columns">
+        <div class="column is-two-thirds">
+            <form method="get" action="/quizzes/randomcheck/<%=quiz.id%>">
+                <ul>
+
+                    <li>
+                        <span class="tag is-dark is-medium"><%=quiz.question%></span>
+                        <input type="text" placeholder="Answer" class="input is-primary" name="answer" autocomplete="off">
+                        <input type="submit" class="button is-success" value="Check">
+                        <a href="/goback" class="button is-info">Go Back</a>
+                    </li>
+                    
+                </ul>
+            </form>
+        </div>
+        
+        <div class="column">
+            <div class="box has-background-info">
+                <h3 class="subtitle is-5">Quiz Tips:</h3>
+
+                <% if(session.user){ %>
+                    <% include ../tips/new %>
+                <% } %>
+
+                <% var tips = quiz.tips; %>
+                <% var quizId = quiz.id; %>
+                <% var quizAuthorId = quiz.authorId; %>
+
+                 <% include ../tips/index %>
+
+            </div>
+        </div> 
     </div>
-    
-</form>
-
-<h3>Quiz Tips:</h3>
-
-<% if(session.user){ %>
-	<% include ../tips/new %>
-<% } %>
-
-<% var tips = quiz.tips; %>
-<% var quizId = quiz.id; %>
-<% var quizAuthorId = quiz.authorId; %>
-
-<% include ../tips/index %>
-
-<a href="/quizzes" class="button">Go Back</a>
+</div>   
