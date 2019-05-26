@@ -1,28 +1,15 @@
-<h2 class="signup">Welcome! Create an account and start playing!</h2>
+<h2 class="subtitle is-4">Welcome! Create an account and start playing!</h2>
 <form method="post" action="/signup">
-    <table class="signup">
-        <tr>
-            <td>
-                <span class="username">Username:</span>
-                <input type="text" class="username" name="username" autocomplete="off">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="password">Password:</span>
-                <input type="password" class="password" name="password" autocomplete="off">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span class="password">Repeat Password:</span>
-                <input type="password" class="password" name="password2" autocomplete="off">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" class="button" value="Sign Up">
-            </td>
-        </tr>
-    </table>
+   <ul>
+        <span class="tag is-dark is-medium">Username:</span>
+        <input type="text" class="input" name="username" autocomplete="off">
+
+        <span class="tag is-dark is-medium">Password:</span>
+        <input type="password" class="input" name="password" autocomplete="off">
+
+        <span class="tag is-dark is-medium">Repeat Password:</span>
+        <input type="password" class="input" name="password2" autocomplete="off">
+
+        <input type="submit" class="button" value="Log In">
+    </ul>
 </form>

@@ -1,37 +1,31 @@
-<h1>User:</h1>
+<h2 class="subtitle is-4">User</h1>
+
+<div class="container">
 
 <ul>
     <li>
-        User name:<b><%= user.username %></b>
+        User name:<b> <%= user.username %></b>
     </li>
 
     <li>
-        Administrator:<b><%= user.isAdmin ? "Yes" : "No" %></b>
+        Administrator:<b> <%= user.isAdmin ? "Yes" : "No" %></b>
     </li>
+
+    <% if (session.user) { %>
+    <li>
+        <a href="/users/<%= user.id %>/follow?_method=PUT"class="button is-small">Follow</a>   
+        <a href="/users/<%= user.id %>/unfollow?_method=DELETE"class="button is-small">Unfollow</a>
+        
+        <% if (session.user.isAdmin || session.user.id === user.id) { %>
+            <a href="/users/<%= user.id %>/edit"class="button is-small">Edit</a>
+        <% } %>
+
+        <% if (session.user.isAdmin && session.user.id !== user.id) { %>
+            <a href="/users/<%= user.id %>?_method=DELETE" onClick="return confirm('Delete user: <%= user.username %>');" class="button is-small">Delete</a>
+        <% } %>
+    </li>
+    <% } %>
 </ul>
 
-<% if (session.user) { %>
-    <table>
-        <tr>
-            <td> 
-                <a href="/users/<%= user.id %>/follow?_method=PUT"class="button">Follow</a>
-            </td>
-            <td>    
-                <a href="/users/<%= user.id %>/unfollow?_method=DELETE"class="button">Unfollow</a>
-            </td>
-            <% if (session.user.isAdmin || session.user.id === user.id) { %>
-                <td>
-                    <a href="/users/<%= user.id %>/edit"class="button">Edit</a>
-                </td>
-            <% } %>
-
-            <% if (session.user.isAdmin && session.user.id !== user.id) { %>
-                <td>
-                    <a href="/users/<%= user.id %>?_method=DELETE" onClick="return confirm('Delete user: <%= user.username %>');" class="button">Delete</a>
-                </td>
-            <% } %>
-        </tr>
-    </table>
-<% } %>
-
 <a href="/goback" class="button">Go back</a>
+</div>

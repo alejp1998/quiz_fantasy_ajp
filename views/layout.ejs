@@ -3,77 +3,78 @@
 <head>
     <meta charset="utf-8">
     <title>Quiz Fantasy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link rel='stylesheet'
-          type='text/css'
-          media='only screen and (min-width: 800px) and (min-device-width: 600px)'
-          href='/stylesheets/wide.css'/>
-    <link rel='stylesheet'
-          type='text/css'
-          media='only screen and (max-width: 480px)'
-          href='/stylesheets/smartphone.css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/mystyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 
 <body>
-<div id="page">
 
-<header class="main" id="mainHeader">
-    <h1>Quiz Fantasy</h1>
-    <% if(session.user){ %>
-        <a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
-    <% } %>
-</header>
+<div class="box">
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <h1 class="title is-1">Quiz Fantasy</h1>
+        </div>
+        <div class="column">
+            <h1 class="subtitle is-2">
+                <% if(session.user){ %>
+                    <a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
+                <% } %>
+            </h2>
+        </div>
+    </div>
+</div>
 
-<nav class="main" id="mainNav" role="navigation">
+<div class="box">
+    <h2 class="subtitle is-3">
+        <a href="/">Home</a>
+        <% if (!session.user){ %>
+            <a class="" href="/login">LogIn</a>
+            <a href="/signup">SignUp</a>
+        <% }else{ %>
+            <a href="/quizzes/randomplay">Play</a>
+            <a href="/quizzes">Quizzes</a>
+            <a href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
+            <a href="/users">Quizzersss</a>
+            <a href="/logout">LogOut</a>
+        <% } %>
+        <a href="/credits">Credits</a>
+    </h2>
+</div>
 
-    <a href="/">Home</a>
-    <% if (!session.user){ %>
-        <a href="/login">LogIn</a>
-        <a href="/signup">SignUp</a>
-    <% }else{ %>
-        <a href="/quizzes/randomplay">Play</a>
-        <a href="/quizzes">Quizzes</a>
-        <a href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
-        <a href="/users">Quizzersss</a>
-        <a href="/logout">LogOut</a>
-    <% } %>
-    <a href="/credits">Credits</a>
-
-</nav>
-
-<section class="main" id="mainSection">
+<section class="box">
     <% if (messages.info) { %>
-        <article id='flashinfo'>
-            <h3>Information:</h3>
+        <div class='notification is-info'>
+            <h3 class="subtitle">Info:</h3>
             <ul>
                 <% for (var i in messages.info) { %>
                     <li> <%= messages.info[i] %> </li>
                 <% } %>
             </ul>
-        </article>
+        </div>
     <% } %>
 
     <% if (messages.success) { %>
-        <article id='flashsuccess'>
-            <h3>Tasks completed successfully:</h3>
+        <div class='notification is-success'>
+            <h3 class="subtitle">Tasks completed successfully:</h3>
             <ul>
                 <% for (var i in messages.success) { %>
                     <li> <%= messages.success[i] %> </li>
                 <% } %>
             </ul>
-        </article>
+        </div>
     <% } %>
 
     <% if (messages.error) { %>
-        <article id='flasherror'>
-            <h3>Errors:</h3>
+        <div class='notification is-danger'>
+            <h3 class="subtitle">Errors:</h3>
             <ul>
                 <% for (var i in messages.error) { %>
                     <li> <%= messages.error[i] %> </li>
                 <% } %>
             </ul>
-        </article>
+        </div>
     <% } %>
 
     <div>
@@ -85,10 +86,11 @@
     <% } %>
 </section>
 
-<footer class="main" id="mainFooter">
-    <a href="http://en.wikipedia.org/wiki/Quiz">Who doesn't care about what a quiz is?</a>
-</footer>
-
 </div>
+
+<div class="box">
+    <a class='subtitle is-6' href="http://en.wikipedia.org/wiki/Quiz">Who doesn't care about what a quiz is?</a>
+</div>
+
 </body>
 </html>

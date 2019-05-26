@@ -1,29 +1,16 @@
-<h1>Edit User:</h1>
+<h2 class="subtitle is-4">Edit User:</h2>
 
 <form method="post" action="/users/<%= user.id %>?_method=PUT">
-    <table class="signup">
-	    <tr>
-	        <td>
-	            <span class="username">New Username:</span>
-	            <input type="text" class="username" name="username" autocomplete="off">
-	        </td>
-	    </tr>
-	    <tr>
-	        <td>
-	            <span class="password">New Password:</span>
-	            <input type="password" class="password" name="password" autocomplete="off">
-	        </td>
-	    </tr>
-	    <tr>
-	        <td>
-	            <span class="password">Repeat New Password:</span>
-	            <input type="password" class="password" name="password2" autocomplete="off">
-	        </td>
-	    </tr>
-	    <tr>
-	        <td>
-	            <input type="submit" class="button" value="Sign Up">
-	        </td>
-	    </tr>
-	</table>
+    <ul>
+        <span class="tag is-dark is-medium">Username:</span>
+        <input type="text" class="input" name="username" autocomplete="off">
+
+        <span class="tag is-dark is-medium">Password:</span>
+        <input type="password" class="input" name="password" autocomplete="off">
+
+        <span class="tag is-dark is-medium">Repeat Password:</span>
+        <input type="password" class="input" name="password2" autocomplete="off">
+
+        <input type="submit" class="button" value="Edit User">
+    </ul>
 </form>
