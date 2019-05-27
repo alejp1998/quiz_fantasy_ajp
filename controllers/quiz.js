@@ -107,7 +107,6 @@ exports.playQuiz = (req, res, next) => {
 //GET /quizzes/:quizId/check
 exports.checkQuiz = (req, res, next) => {
 	let result;
-	let user = req.session.user;
 	const quiz = req.quiz;
 	const answer = req.query.answer;
 	if(!quiz){
@@ -115,19 +114,25 @@ exports.checkQuiz = (req, res, next) => {
 	}
 	if(quiz.answer.toLowerCase().trim()===answer.toLowerCase().trim()){
 		result = "Correct";
-		if(user){
-			user.points = user.points+1;
-		}
 	}else{
 		result = "Incorrect";
-		if(user){
-			user.fails = user.fails+1;
-		}
 	}
-	return models.user.update(user, { where: {id: user.id} } )
-	.then( () => {
-		res.render('quizzes/check.ejs', {quiz,result} );
-	});
+
+	if(req.session.user){
+		const userId = req.session.user.id;
+		models.user.findByPk(userId)
+		.then(user => {
+			if(result){
+				user.points++;
+			}else{
+				user.fails--;
+			}
+			user.save({fields: ["points","fails"]})
+			.then( () => res.render('quizzes/check.ejs', {quiz,result} ) );
+		});
+	}else{
+		return res.render('quizzes/check.ejs', {quiz,result} );
+	}
 };
 
 //GET /quizzes/:quizId/edit
@@ -230,7 +235,6 @@ exports.deleteQuiz = (req, res, next) => {
 
 //GET /quizzes/randomplay
 exports.randomPlay = (req,res,next) => {
-	let {user} = req.session || null;
 	ssn = req.session;
 	ssn.score = ssn.score || 0;
 	if(!ssn.score){
@@ -248,10 +252,17 @@ exports.randomPlay = (req,res,next) => {
 			const score = ssn.score;
 			if(!quiz){
 				ssn.score = 0;
-				if(user){
-					user.points+=score;
+				if(req.session.user){
+					const userId = req.session.user.id;
+					models.user.findByPk(userId)
+					.then(user => {
+						user.points += score;
+						user.save({fields: ["points"]})
+						.then( () => res.render('quizzes/random_nomore.ejs', {score} ));
+					});
+				}else{
+					return res.render('quizzes/random_nomore.ejs', {score} );
 				}
-				return res.render('quizzes/random_nomore.ejs', {score} );
 			}else{
 				return res.render('quizzes/random_play.ejs', { quiz , score , nquizzes } );
 			}
@@ -264,7 +275,6 @@ exports.randomPlay = (req,res,next) => {
 
 //GET /quizzes/randomcheck/:quizId
 exports.randomCheck = (req, res, next) => {
-	let {user} = req.session || null;
 	ssn = req.session;
 	const answer = req.query.answer;
 	const quiz = req.quiz;
@@ -279,11 +289,17 @@ exports.randomCheck = (req, res, next) => {
 
 	const score = ssn.score;
 	if(!result){
-		if(user){
-			user.points+=score;
-			user.fails--;
-		}
 		ssn.score = 0;
+		if(req.session.user){
+			const userId = req.session.user.id;
+			models.user.findByPk(userId)
+			.then(user => {
+				user.points += score;
+				user.fails--;
+				user.save({fields: ["points","fails"]})
+				.then( () => res.render('quizzes/random_result.ejs', {result,score,answer} ));
+			});
+		}
 	}
 	return res.render('quizzes/random_result.ejs', {result,score,answer} );
 };

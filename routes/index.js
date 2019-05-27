@@ -40,8 +40,8 @@ router.get('/users/:userId(\\d+)/quizzes', quizController.index);
 
 /* GET quizzes */
 router.get('/quizzes', quizController.index);
-router.get('/quizzes/:quizId(\\d+)/play',quizController.playQuiz);
-router.get('/quizzes/:quizId(\\d+)/check',quizController.checkQuiz);
+router.get('/quizzes/:quizId(\\d+)/play',sessionController.loginRequired,quizController.playQuiz);
+router.get('/quizzes/:quizId(\\d+)/check',sessionController.loginRequired,quizController.checkQuiz);
 router.get('/quizzes/:quizId(\\d+)',sessionController.loginRequired,quizController.showQuiz);
 router.get('/quizzes/:quizId(\\d+)/edit', sessionController.loginRequired, quizController.adminOrAuthorRequired, 
     quizController.editQuiz);

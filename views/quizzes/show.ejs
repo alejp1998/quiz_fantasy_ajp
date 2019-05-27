@@ -6,8 +6,8 @@
 
 		<div class="column">
 			<small> [Quiz by: 
-				<%if(session.user){ %> 
-					<a class="user" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
+				<%if(quiz.user){ %> 
+					<a class="user" href="/users/<%= quiz.author.id %>" ><%= quiz.author.username%></a>
 				<% }else{ %>
 					Anonymous 
 				<% } %>
@@ -20,7 +20,7 @@
         <div class="column is-two-thirds">
             <form method="get" action="/quizzes/<%=quiz.id%>/check">
                 <ul>
-
+                    
                     <li>
                         <span class="tag is-dark is-medium">Question:</span>
                         <p class="subtitle is-4"><%= quiz.question %></p>
