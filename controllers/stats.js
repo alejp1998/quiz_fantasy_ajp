@@ -10,8 +10,7 @@ exports.stats = (req,res,next) => {
 	let bestUsers = [];
 
 	const bestOptions = {
-		order: [ ['points', 'DESC'] ],
-		limit: 10
+		order: [ ['points', 'DESC'] ]
 	};
 
 	models.user.count()
@@ -19,6 +18,7 @@ exports.stats = (req,res,next) => {
 		nusers = count;
 		models.user.findAll(bestOptions)
 		.then(quizzes => {
+			quizzes.length = 10;
 			bestUsers = quizzes;
 			models.quiz.count()
 			.then(count => {

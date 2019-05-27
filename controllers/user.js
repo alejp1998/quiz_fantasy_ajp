@@ -22,7 +22,6 @@ exports.load = (req, res, next, userId) => {
 // GET /users
 exports.index = (req, res, next) => {
     let countOptions = {
-        order: [ ['points', 'DESC'] ],
         where: {},
         include: []
     };
@@ -38,9 +37,9 @@ exports.index = (req, res, next) => {
 
         const findOptions = {
             ...countOptions,
+            order: [ ['points', 'DESC'] ],
             offset: page_items*(pageno-1),
-            limit: page_items,
-            order: ['username']
+            limit: page_items
         };
 
         return models.user.findAll(findOptions);
