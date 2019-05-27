@@ -10,7 +10,7 @@ exports.stats = (req,res,next) => {
 	let bestUsers = [];
 
 	const bestOptions = {
-		order: [ ['points', 'DESC'] , ['fails', 'ASC'] ],
+		order: [ ['points', 'DESC'] ],
 		limit: 10
 	};
 

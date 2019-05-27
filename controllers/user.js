@@ -22,6 +22,7 @@ exports.load = (req, res, next, userId) => {
 // GET /users
 exports.index = (req, res, next) => {
     let countOptions = {
+        order: [ ['points', 'DESC'] ],
         where: {},
         include: []
     };

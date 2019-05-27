@@ -6,22 +6,24 @@
             <li class="is-medium">
                 <a href="/users/<%= users[i].id %>" ><%= users[i].username %></a>
                 <%= users[i].isAdmin ? "(admin)" : "" %>
+                <span class="tag is-small is-ligth">Points: <%= users[i].points %></span>
+                <span class="tag is-small is-dark">Fails: <%= users[i].fails %></span>
 
             <% if (session.user) { %>
                 
                 <% if(users[i].id!=session.user.id){%>
-                        <a href="/users/<%= users[i].id %>/follow?_method=PUT"class="button is-small">Follow</a>
-                        <a href="/users/<%= users[i].id %>/unfollow?_method=DELETE"class="button is-small">Unfollow</a> 
+                        <a href="/users/<%= users[i].id %>/follow?_method=PUT"class="button is-small is-success">Follow</a>
+                        <a href="/users/<%= users[i].id %>/unfollow?_method=DELETE"class="button is-small is-danger">Unfollow</a> 
                 <% } %>            
                 
                 <% if (session.user.isAdmin || session.user.id === users[i].id) { %>
-                        <a href="/users/<%= users[i].id %>/edit"class="button is-small">Edit</a>
+                        <a href="/users/<%= users[i].id %>/edit"class="button is-small is-warning">Edit</a>
                 <%  } %>
 
                 <% if (session.user.isAdmin && session.user.id !== users[i].id) { %>
                         <a href="/users/<%= users[i].id %>?_method=DELETE"
                            onClick="return confirm('Delete user: <%= users[i].username %>');"
-                            class="button is-small">Delete</a>
+                            class="button is-small is-danger">Delete</a>
                 <% } %>
 
             <% } %>

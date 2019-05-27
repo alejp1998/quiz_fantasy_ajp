@@ -3,6 +3,12 @@
 <h2 class="subtitle is-4">User</h1>
 <ul>
     <li>
+        <a href="/users/<%=user.id %>/quizzes" class="button is-info is-small">Creations</a>
+        <span class="tag is-small is-ligth">Points: <%= user.points %></span>
+        <span class="tag is-small is-dark">Fails: <%= user.fails %></span>
+    </li>
+
+    <li>
         User name:<b> <%= user.username %></b>
     </li>
 
@@ -12,15 +18,15 @@
 
     <% if (session.user) { %>
     <li>
-        <a href="/users/<%= user.id %>/follow?_method=PUT"class="button is-small">Follow</a>   
-        <a href="/users/<%= user.id %>/unfollow?_method=DELETE"class="button is-small">Unfollow</a>
+        <a href="/users/<%= user.id %>/follow?_method=PUT"class="button is-small is-success">Follow</a>   
+        <a href="/users/<%= user.id %>/unfollow?_method=DELETE"class="button is-small is-danger">Unfollow</a>
         
         <% if (session.user.isAdmin || session.user.id === user.id) { %>
-            <a href="/users/<%= user.id %>/edit"class="button is-small">Edit</a>
+            <a href="/users/<%= user.id %>/edit"class="button is-small is-warning">Edit</a>
         <% } %>
 
         <% if (session.user.isAdmin && session.user.id !== user.id) { %>
-            <a href="/users/<%= user.id %>?_method=DELETE" onClick="return confirm('Delete user: <%= user.username %>');" class="button is-small">Delete</a>
+            <a href="/users/<%= user.id %>?_method=DELETE" onClick="return confirm('Delete user: <%= user.username %>');" class="button is-small is-danger">Delete</a>
         <% } %>
     </li>
     <% } %>
