@@ -4,41 +4,33 @@ const Op = Sequelize.Op;
 const paginate = require('../helpers/paginate').paginate;
 var ssn;
 
-const nUsers = async() => {
-	return await models.user.count();
-}
-const nQuizzes = async() => {
-	return await models.quiz.count();
-}
-const nTips = async() => {
-	return await models.tip.count();
-}
-
-const getBestUsers = async() => {
-	const bestOptions = {
-		where: { points: {[Op.gt]: 5} }
-	};
-
-	await models.user.findAll(bestOptions)
-	.then(users => {
-		return users;
-	});
-};
-
-
-
 // GET /stats
 exports.stats = (req,res,next) => {
 	let nusers,nquizzes,ntips;
 	let bestUsers = [];
-	
-	nusers = nUsers();
-	nquizzes = nQuizzes();
-	ntips = nTips();
 
-	bestusers = getBestUsers();
+	const bestOptions = {
+		order: [ ['points', 'DESC'] , ['fails', 'ASC'] ],
+		limit: 10
+	};
 
-	return res.render('stats/stats.ejs', {nusers,nquizzes,ntips,bestUsers} );
+	models.user.count()
+	.then(count => {
+		nusers = count;
+		models.user.findAll(bestOptions)
+		.then(quizzes => {
+			bestUsers = quizzes;
+			models.quiz.count()
+			.then(count => {
+				nquizzes = count;
+				models.tip.count()
+				.then(count => {
+					ntips = count;
+					return res.render('stats/stats.ejs', {nusers,nquizzes,ntips,bestUsers} );
+				});
+			});
+		});
+	}).catch(error => next(error));
 };
 
 // GET /userstats/:userId 
@@ -53,5 +45,5 @@ exports.userstats = (req,res,next) => {
 	models.user.findByPk(req.user.id,userOptions)
 	.then(user => {
 		return res.render('stats/userstats.ejs', {user} );
-	});
+	}).catch(error => next(error));
 };

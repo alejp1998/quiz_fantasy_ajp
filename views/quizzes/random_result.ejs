@@ -2,15 +2,20 @@
 
     <h2 class="subtitle is-4">Random Play</h2>
     <h3 class="subtitle is-5">Successful answers = <strong><%= score %></strong></h3>
-    <p>The answer <strong> <%= answer %> </strong> is <%= result ? 'right' : 'wrong' %>.</p>
+
     <p>
-        <% if (!result) { %>
-            You have failed.
-            <a class="button is-info" href="/quizzes"> End of Play </a>
-        <% } else { %>
-            You have succeeded.
-            <a class="button is-success" href="/quizzes/randomplay">Continue playing</a>
-        <% } %>
+    <span class="tag is-small is-ligth">Points: <%= session.user.points %></span>
+    <span class="tag is-small is-dark">Fails: <%= session.user.fails %></span>
     </p>
+    
+    <p>The answer <strong> <%= answer %> </strong> is <%= result ? 'right' : 'wrong' %>.</p>
+
+    <% if (!result) { %>
+        You have failed.
+        <a class="button is-danger" href="/quizzes"> End of Play </a>
+    <% } else { %>
+        You have succeeded.
+        <a class="button is-success" href="/quizzes/randomplay?_method=PUT">Continue playing</a>
+    <% } %>
 
 </div> 

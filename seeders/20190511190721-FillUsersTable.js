@@ -40,6 +40,31 @@ module.exports = {
         username: 'margaret',
         password: bCrypt.hashSync('margaret',10),
         createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'jennifer',
+        password: bCrypt.hashSync('jennifer',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'david',
+        password: bCrypt.hashSync('david',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'phineas',
+        password: bCrypt.hashSync('phineas',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'mery',
+        password: bCrypt.hashSync('mery',10),
+        createdAt: new Date(), updatedAt: new Date()
+      },
+      {
+        username: 'elsa',
+        password: bCrypt.hashSync('elsa',10),
+        createdAt: new Date(), updatedAt: new Date()
       }
     ]);
   },

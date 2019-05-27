@@ -5,13 +5,13 @@
         </div>
 
         <div class="column is-two-thirds">
-            <progress class="progress is-success" value="<%= score %>" max="<%= nquizzes %>"></progress>
+            <progress class="progress is-success" value="<%= score %>" max="<%= session.nquizzes %>"></progress>
         </div>
     </div>
 
     <div class="columns">
         <div class="column is-two-thirds">
-            <form method="get" action="/quizzes/randomcheck/<%=quiz.id%>">
+            <form method="post" action="/quizzes/randomcheck/<%=quiz.id%>?_method=PUT">
                 <ul>
                     <li>
                         <span class="tag is-dark is-medium"><%=quiz.question%></span>

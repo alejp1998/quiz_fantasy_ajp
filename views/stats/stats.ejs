@@ -5,14 +5,14 @@
         <div class="column">
             <div class="box">
                 <span class="tag is-success is-large">Creations</span>
-                <canvas id="myChart1" widht="80vh" height="80vh"></canvas>
+                <canvas id="myChart1" widht="120vh" height="120vh"></canvas>
             </div>
         </div>
 
         <div class="column">
             <div class="box">
-                <span class="tag is-success is-large">Play</span>
-                <canvas id="myChart2" widht="80vh" height="80vh>"</canvas>
+                <span class="tag is-success is-large">Top 10 Players</span>
+                <canvas id="myChart2" widht="120vh" height="120vh"></canvas>
             </div>
         </div>
 
@@ -24,17 +24,19 @@
     var myChart1 = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Quizzes', 'Tips'],
+            labels: ['Users','Quizzes', 'Tips'],
             datasets: [{
                 label: '# of Elements',
-                data: [<%=user.quizzes.length%>,<%=user.tips.length%>],
+                data: [<%=nusers%>,<%=nquizzes%>,<%=ntips%>],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(200, 162, 235, 0.8)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(200, 162, 235, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -47,26 +49,107 @@
     var ctx = document.getElementById('myChart2').getContext('2d');
 
     var myChart2 = new Chart(ctx, {
-        type: 'pie',
+        type: 'bar',
         data: {
-            labels: ['Quizzes', 'Tips'],
+            labels: ['<%=bestUsers[0].username%>',
+                    '<%=bestUsers[1].username%>',
+                    '<%=bestUsers[2].username%>',
+                    '<%=bestUsers[3].username%>',
+                    '<%=bestUsers[4].username%>',
+                    '<%=bestUsers[5].username%>',
+                    '<%=bestUsers[6].username%>',
+                    '<%=bestUsers[7].username%>',
+                    '<%=bestUsers[8].username%>',
+                    '<%=bestUsers[9].username%>'
+            ],
             datasets: [{
-                label: '# of Elements',
-                data: [<%=user.quizzes.length%>,<%=user.tips.length%>],
+                label: '# of Points',
+                data: [<%=bestUsers[0].points%>,
+                        <%=bestUsers[1].points%>,
+                        <%=bestUsers[2].points%>,
+                        <%=bestUsers[3].points%>,
+                        <%=bestUsers[4].points%>,
+                        <%=bestUsers[5].points%>,
+                        <%=bestUsers[6].points%>,
+                        <%=bestUsers[7].points%>,
+                        <%=bestUsers[8].points%>,
+                        <%=bestUsers[9].points%>
+                ],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(54, 162, 235, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            },{
+                label: '# of Fails',
+                data: [<%=bestUsers[0].fails%>,
+                        <%=bestUsers[1].fails%>,
+                        <%=bestUsers[2].fails%>,
+                        <%=bestUsers[3].fails%>,
+                        <%=bestUsers[4].fails%>,
+                        <%=bestUsers[5].fails%>,
+                        <%=bestUsers[6].fails%>,
+                        <%=bestUsers[7].fails%>,
+                        <%=bestUsers[8].fails%>,
+                        <%=bestUsers[9].fails%>
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(255, 99, 132, 0.8)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
                 ],
                 borderWidth: 1
             }]
         },
         options: {
-            responsive: true
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
     });
+
     </script>
 </div>

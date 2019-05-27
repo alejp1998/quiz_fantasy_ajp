@@ -11,6 +11,16 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             validate: {notEmpty: {msg: "Password must not be empty."}},
         },
+        points: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: '0'
+        },
+        fails: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: '0'
+        },
         isAdmin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false

@@ -48,7 +48,6 @@ exports.adminOrAuthorRequired = (req, res, next) => {
 
 // GET /quizzes
 exports.index = (req, res, next) => {
-	req.session.nquizzes = 0;
 
 	let countOptions = {
         where: {},
@@ -73,7 +72,6 @@ exports.index = (req, res, next) => {
 	//Si no hemos buscado nada, muestra todos los quizzes
     models.quiz.count(countOptions)
     .then(count => {
-    	req.session.nquizzes = count;
     	//Pagination
 		const page_items = 5;
 		//The page shown is in the query
@@ -108,7 +106,7 @@ exports.playQuiz = (req, res, next) => {
 exports.checkQuiz = (req, res, next) => {
 	let result;
 	const quiz = req.quiz;
-	const answer = req.query.answer;
+	const answer = req.body.answer;
 	if(!quiz){
 		return res.render(`El quiz ${req.params.quizId} no existe.`);
 	}
@@ -122,13 +120,14 @@ exports.checkQuiz = (req, res, next) => {
 		const userId = req.session.user.id;
 		models.user.findByPk(userId)
 		.then(user => {
-			if(result){
+			if(result === "Correct"){
 				user.points++;
 			}else{
-				user.fails--;
+				user.fails++;
 			}
+			req.session.user = user;
 			user.save({fields: ["points","fails"]})
-			.then( () => res.render('quizzes/check.ejs', {quiz,result} ) );
+			.then( () => res.render('quizzes/check.ejs', {quiz,result} ));
 		});
 	}else{
 		return res.render('quizzes/check.ejs', {quiz,result} );
@@ -241,67 +240,75 @@ exports.randomPlay = (req,res,next) => {
 		ssn.randomPlay = [];
 	}
 
-	nquizzes = req.session.nquizzes;
-
-	models.quiz.findOne({
-		where: {id: {[Op.notIn]: ssn.randomPlay}},
-		order: [Sequelize.fn( 'RANDOM' ),]
-	})
-
-		.then(quiz => {
+	models.quiz.count()
+	.then( (count) => {
+		req.session.nquizzes = count;
+		models.quiz.findOne({
+			where: {id: {[Op.notIn]: ssn.randomPlay}},
+			order: [Sequelize.fn( 'RANDOM' ),]
+		}).then(quiz => {
 			const score = ssn.score;
 			if(!quiz){
 				ssn.score = 0;
-				if(req.session.user){
-					const userId = req.session.user.id;
-					models.user.findByPk(userId)
-					.then(user => {
-						user.points += score;
-						user.save({fields: ["points"]})
-						.then( () => res.render('quizzes/random_nomore.ejs', {score} ));
-					});
-				}else{
-					return res.render('quizzes/random_nomore.ejs', {score} );
-				}
+				return res.render('quizzes/random_nomore.ejs', {score} );
 			}else{
-				return res.render('quizzes/random_play.ejs', { quiz , score , nquizzes } );
+				return res.render('quizzes/random_play.ejs', { quiz , score} );
 			}
-		})
-		.catch(error => {
-			req.flash('error', 'Error asking next question: ' + error.message);
-			next(error);
 		});
+	}).catch(error => {
+		req.flash('error', 'Error asking next question: ' + error.message);
+		next(error);
+	});
+	
 };
 
 //GET /quizzes/randomcheck/:quizId
 exports.randomCheck = (req, res, next) => {
 	ssn = req.session;
-	const answer = req.query.answer;
+	const answer = req.body.answer;
 	const quiz = req.quiz;
+	let score = ssn.score;
 
 	let result = false;
+
+	if(!answer){
+		req.flash('error','Answer empty');
+		return res.render('quizzes/random_play.ejs',{ quiz , score});
+	}
 
 	if(answer.toLowerCase().trim()===quiz.answer.toLowerCase().trim()){
 		result = true;
 		ssn.score++;
+		score++;
 		ssn.randomPlay.push(quiz.id);
 	}
 
-	const score = ssn.score;
+	
 	if(!result){
 		ssn.score = 0;
 		if(req.session.user){
 			const userId = req.session.user.id;
 			models.user.findByPk(userId)
 			.then(user => {
-				user.points += score;
-				user.fails--;
+				user.fails++;
+				req.session.user = user;
+				user.save({fields: ["points","fails"]})
+				.then( () => res.render('quizzes/random_result.ejs', {result,score,answer} ));
+			});
+		}
+	}else{
+		if(req.session.user){
+			const userId = req.session.user.id;
+			models.user.findByPk(userId)
+			.then(user => {
+				user.points++;
+				req.session.user = user;
 				user.save({fields: ["points","fails"]})
 				.then( () => res.render('quizzes/random_result.ejs', {result,score,answer} ));
 			});
 		}
 	}
-	return res.render('quizzes/random_result.ejs', {result,score,answer} );
+	
 };
 
 

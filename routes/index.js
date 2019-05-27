@@ -41,16 +41,16 @@ router.get('/users/:userId(\\d+)/quizzes', quizController.index);
 /* GET quizzes */
 router.get('/quizzes', quizController.index);
 router.get('/quizzes/:quizId(\\d+)/play',sessionController.loginRequired,quizController.playQuiz);
-router.get('/quizzes/:quizId(\\d+)/check',sessionController.loginRequired,quizController.checkQuiz);
 router.get('/quizzes/:quizId(\\d+)',sessionController.loginRequired,quizController.showQuiz);
 router.get('/quizzes/:quizId(\\d+)/edit', sessionController.loginRequired, quizController.adminOrAuthorRequired, 
     quizController.editQuiz);
 router.get('/quizzes/new',sessionController.loginRequired, quizController.newQuiz);
-router.get('/quizzes/randomplay',quizController.randomPlay);
-router.get('/quizzes/randomcheck/:quizId(\\d+)', quizController.randomCheck);
 /*PUT quizzes*/
 router.put('/quizzes/:quizId(\\d+)',sessionController.loginRequired, quizController.adminOrAuthorRequired, 
     quizController.updateQuiz);
+router.put('/quizzes/randomplay',quizController.randomPlay);
+router.put('/quizzes/randomcheck/:quizId(\\d+)', quizController.randomCheck);
+router.put('/quizzes/:quizId(\\d+)/check',sessionController.loginRequired,quizController.checkQuiz);
 /*POST quizzes*/
 router.post('/quizzes',sessionController.loginRequired, quizController.addQuiz);
 /*DELETE quizzes*/

@@ -14,8 +14,7 @@
           <% if (accepted || isAdmin || isQuizAuthor) { %>
 
               <li>
-                  <span class="tag is-success is-small"><%= tip.author.username %></span>
-                  <p class="has-text-white is-small"> <%= tip.text %> </p>
+                  <p class="has-text-white is-small"> <%= tip.text %> <span class="tag is-success is-small"><%= tip.author.username %></span>
 
                   <% if (!accepted && (isAdmin || isQuizAuthor)) { %>
                       <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/accept?_method=PUT" class="button is-warning is-small">Accept</a>
@@ -28,6 +27,7 @@
                   <% if (isAdmin || isQuizAuthor) { %>
                           <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>?_method=DELETE" class="button is-danger is-small">Delete</a>
                   <% } %>
+                  </p>
               </li>
                         
           <% } %>
