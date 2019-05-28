@@ -19,7 +19,7 @@
 
 </head>
 
-<body>
+<body class="body">
 
 <nav class="navbar navlogo" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
@@ -109,7 +109,7 @@
   })();
 </script>
 
-<section class="container">
+<section class="hero">
     <% if (messages.info) { %>
         <div class='notification is-info'>
             <h3 class="subtitle">Info:</h3>
@@ -143,7 +143,7 @@
         </div>
     <% } %>
 
-    <div class="box">
+    <div class="hero-body">
         <%- body %>
         <% if (locals.paginate_control) { %>
           <%- paginate_control %>
@@ -154,9 +154,11 @@
 
 </div>
 
-<div class="box">
+<footer class="footer">
+  <div class="box has-text-centered">
     <a class='subtitle is-6' href="http://en.wikipedia.org/wiki/Quiz">Who doesn't care about what a quiz is?</a>
-</div>
+  </div>
+</footer>
 
 </body>
 </html>
