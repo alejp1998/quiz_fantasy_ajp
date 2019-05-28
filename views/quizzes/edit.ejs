@@ -3,23 +3,65 @@
 
   <form method="post" action="/quizzes/<%=quiz.id%>?_method=PUT">
 
-    <ul>
+    <% if(!quiz.choice){%>
+        <ul>
 
-      <li>
-        <span class="tag is-dark is-medium">Question:</span>
-        <input type="text" value="<%=quiz.question%>" class="input is-primary" name="question" autocomplete="off">
-      </li>
+          <li>
+            <span class="tag is-dark is-medium">Question:</span>
+            <input type="text" value="<%=quiz.question%>" class="input is-primary" name="question" autocomplete="off">
+          </li>
 
-      <li>
-        <span class="tag is-dark is-medium">Answer:</span>
-        <input type="text" value="<%=quiz.answer%>" class="input is-primary" name="answer" autocomplete="off">
-      </li>
+          <li>
+            <span class="tag is-dark is-medium">Answer:</span>
+            <input type="text" value="<%=quiz.answer%>" class="input is-primary" name="answer" autocomplete="off">
+          </li>
 
-      <li>
-        <input type="submit" class="button is-warning" value="Edit Quiz">
-      </li>
+          <li>
+            <input type="submit" class="button is-warning" value="Edit Quiz">
+          </li>
 
-    </ul>
+        </ul>
+
+    <% }else{ %>
+        <ul>
+
+          <li>
+            <span class="tag is-dark is-medium">Question:</span>
+            <input type="text" value="<%=quiz.question%>" class="input is-primary" name="question" autocomplete="off">
+          </li>
+
+          <li>
+            <span class="tag is-dark is-medium">Correct Answer:</span>
+            <input type="text" value="<%=quiz.answer%>" class="input is-primary" name="answer" autocomplete="off">
+          </li>
+
+          <li>
+            <h2 class="subtitle is-5">Choice quiz:</h2>
+            <p>You have to fill all the answers, and one of them must be equal to the correct answer</p>
+          </li>
+
+          <li>
+            <span class="tag is-dark is-medium">Answer1:</span>
+            <input type="text" value="<%=quiz.answer1%>" class="input is-primary" name="answer1" autocomplete="off">
+          </li>
+
+          <li>
+            <span class="tag is-dark is-medium">Answer2:</span>
+            <input type="text" value="<%=quiz.answer2%>" class="input is-primary" name="answer2" autocomplete="off">
+          </li>
+
+          <li>
+            <span class="tag is-dark is-medium">Answer3:</span>
+            <input type="text" value="<%=quiz.answer3%>" class="input is-primary" name="answer3" autocomplete="off">
+          </li>
+
+          <li>
+            <input type="submit" class="button is-warning" value="Edit Quiz">
+          </li>
+
+        </ul>
+    <% } %>
+    
               
   </form>
 </div>

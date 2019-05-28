@@ -35,6 +35,7 @@
 
     <div class="navbar-start">
       <a class="navbar-item" href="/">Home</a>
+      <a class="navbar-item" href="/quizzes/randomplay?_method=PUT">Play</a>
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/users">Users</a>
@@ -52,7 +53,8 @@
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/quizzes">Quizzes</a>
         <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item" href="/quizzes/randomplay?_method=PUT">Play</a>
+            <a class="navbar-item" href="/quizzes?search=choice">Choice Quizzes</a>
+            <a class="navbar-item" href="/quizzes?search=nochoice">Q&A Quizzes</a>
             <% if (session.user){ %>
               <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
             <% } %>
@@ -61,10 +63,11 @@
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/stats">Stats</a>
-        <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item" href="/stats">General</a>
-            <% if(session.user){ %><a class="navbar-item" href="/userstats/<%= session.user.id %>">Userstats</a><% } %>
-        </div>
+        <% if(session.user){ %>
+          <div class="navbar-dropdown is-boxed">
+              <a class="navbar-item" href="/userstats/<%= session.user.id %>">Userstats</a>
+          </div>
+        <% } %>
       </div>
 
       <a class="navbar-item" href="/credits">Credits</a>

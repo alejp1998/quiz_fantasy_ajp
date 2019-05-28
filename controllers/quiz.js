@@ -58,10 +58,17 @@ exports.index = (req, res, next) => {
 	//Search quizzes
 	const search = req.query.search || '';
 	if(search){
-		//Normalizamos texto sustituyendo los blancos por %
-		const search_like = "%" + search.replace(/ +/g,"%") + "%";
-		//Creamos la expresion de la busqueda 
-		countOptions.where = {question: { [Op.like]: search_like}};
+		if(search==='choice'){
+			countOptions.where = {choice: true};
+		}else if(search==='nochoice'){
+			countOptions.where = {choice: false};
+		}else{
+			//Normalizamos texto sustituyendo los blancos por %
+			const search_like = "%" + search.replace(/ +/g,"%") + "%";
+			//Creamos la expresion de la busqueda 
+			countOptions.where = {question: { [Op.like]: search_like}};
+		}
+		
 	}
 
 	if(req.user){
@@ -149,19 +156,44 @@ exports.updateQuiz = (req, res, next) => {
 	const id = req.quiz.id;
 	var quiz = req.body;
 	quiz.id = id;
+	const {answer,answer1,answer2,answer3} = quiz;
 
-	models.quiz.update( quiz, { where: {id} } )
-	.then(() => {
-		req.flash('success','Quiz updated succesfully');
-		res.redirect('/quizzes');
-	}).catch(Sequelize.ValidationError, error => {
-		req.flash('error','There are errors in the form:');
-		error.errors.forEach(({message}) => req.flash('error',message));
-		res.render('quizzes/edit',{quiz});
-	}).catch(error => {
-		req.flash('error','Error updating the quiz: '+error.message);
-		next(error);
-	});
+	if(!quiz.choice){
+
+		models.quiz.update( quiz, { where: {id} } )
+		.then(() => {
+			req.flash('success','Quiz updated succesfully');
+			res.redirect('/quizzes');
+		}).catch(Sequelize.ValidationError, error => {
+			req.flash('error','There are errors in the form:');
+			error.errors.forEach(({message}) => req.flash('error',message));
+			res.render('quizzes/edit',{quiz});
+		}).catch(error => {
+			req.flash('error','Error updating the quiz: '+ error.message);
+			next(error);
+		});
+
+	}else if(quiz.choice){
+
+		if((answer1==answer) || (answer2==answer) || (answer3==answer)){
+			models.quiz.update( quiz, { where: {id} } )
+			.then(() => {
+				req.flash('success','Quiz updated succesfully');
+				res.redirect('/quizzes');
+			}).catch(Sequelize.ValidationError, error => {
+				req.flash('error','There are errors in the form:');
+				error.errors.forEach(({message}) => req.flash('error',message));
+				res.render('quizzes/edit',{quiz});
+			}).catch(error => {
+				req.flash('error','Error updating the quiz: '+ error.message);
+				next(error);
+			});
+		}else{
+			req.flash('error','Errors in choice answers');
+			res.render('quizzes/edit',{quiz});
+		}
+
+	}
 };
 
 //GET /quizzes/:quizId
@@ -189,17 +221,26 @@ exports.showQuiz = (req, res, next) => {
 
 //GET /quizzes/new
 exports.newQuiz = (req, res, next) => {
-	const quiz = {question: '', answer: ''};
+	const quiz = {question: '', answer: '', answer1: '', answer2: '', answer3: ''};
 	res.render('quizzes/new.ejs',{quiz});
 };
 
 //POST /quizzes/
 exports.addQuiz = (req, res, next) => {
-	const {question,answer} = req.body;
-
+	const {question,answer,answer1,answer2,answer3} = req.body;
+	let choice;
 	const authorId = req.session.user && req.session.user.id || 0;
 
-	const quiz = {question, answer, authorId};
+	const quiz = {choice,question,answer,answer1,answer2,answer3,authorId};
+
+	if(answer1=='' && answer2=='' && answer3==''){
+		quiz.choice = false;
+	}else if(answer1==answer || answer2==answer || answer3==answer){
+		quiz.choice = true;
+	}else{
+		req.flash('error', 'You must enter all answers correctly');
+		return res.render('quizzes/new', {quiz});
+	}
 
 	models.quiz.create(quiz)
 		.then(() => {
@@ -283,10 +324,9 @@ exports.randomCheck = (req, res, next) => {
 		ssn.randomPlay.push(quiz.id);
 	}
 
-	
-	if(!result){
-		ssn.score = 0;
-		if(req.session.user){
+	if(req.session.user){
+		if(!result){
+			ssn.score = 0;
 			const userId = req.session.user.id;
 			models.user.findByPk(userId)
 			.then(user => {
@@ -295,9 +335,7 @@ exports.randomCheck = (req, res, next) => {
 				user.save({fields: ["points","fails"]})
 				.then( () => res.render('quizzes/random_result.ejs', {result,score,answer} ));
 			});
-		}
-	}else{
-		if(req.session.user){
+		}else{
 			const userId = req.session.user.id;
 			models.user.findByPk(userId)
 			.then(user => {
@@ -307,7 +345,13 @@ exports.randomCheck = (req, res, next) => {
 				.then( () => res.render('quizzes/random_result.ejs', {result,score,answer} ));
 			});
 		}
+	}else{
+		if(!result){
+			ssn.score = 0;
+		}
+		return res.render('quizzes/random_result.ejs', {result,score,answer} );
 	}
+	
 	
 };
 

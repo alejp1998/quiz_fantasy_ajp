@@ -3,10 +3,12 @@
     <h2 class="subtitle is-4">Random Play</h2>
     <h3 class="subtitle is-5">Successful answers = <strong><%= score %></strong></h3>
 
-    <p>
-    <span class="tag is-small is-ligth">Points: <%= session.user.points %></span>
-    <span class="tag is-small is-dark">Fails: <%= session.user.fails %></span>
-    </p>
+    <%if(session.user){%>
+        <p>
+            <span class="tag is-small is-ligth">Points: <%= session.user.points %></span>
+            <span class="tag is-small is-dark">Fails: <%= session.user.fails %></span>
+        </p>
+    <% } %>
     
     <p>The answer <strong> <%= answer %> </strong> is <%= result ? 'right' : 'wrong' %>.</p>
 

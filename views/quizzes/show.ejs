@@ -17,23 +17,48 @@
 	</div>
 
     <div class="columns">
+
+    <% if(!quiz.choice){ %>
+
+        
         <div class="column is-two-thirds">
-            <form method="get" action="/quizzes/<%=quiz.id%>/check">
-                <ul>
-                    
-                    <li>
-                        <span class="tag is-dark is-medium">Question:</span>
-                        <p class="subtitle is-4"><%= quiz.question %></p>
-                    </li>
-                    <li>
-                        <span class="tag is-success is-medium">Answer:</span>
-                        <p class="subtitle is-4"><%= quiz.answer %></p>
-                        <a href="/goback" class="button is-info">Go Back</a>
-                    </li>
-                    
-                </ul>
-            </form>
+            <ul>
+                
+                <li>
+                    <span class="tag is-dark is-medium">Question:</span>
+                    <p class="subtitle is-4"><%= quiz.question %></p>
+                </li>
+                <li>
+                    <span class="tag is-success is-medium">Answer:</span>
+                    <p class="subtitle is-4"><%= quiz.answer %></p>
+                    <a href="/goback" class="button is-info">Go Back</a>
+                </li>
+                
+            </ul>
         </div>
+
+    <% }else{ %>
+
+        <div class="column is-two-thirds">
+            <ul>
+                
+                <li>
+                    <span class="tag is-dark is-medium">Question:</span>
+                    <p class="subtitle is-4"><%= quiz.question %></p>
+                </li>
+                <li>
+                    <span class="tag is-success is-medium">Answers (<b> <%=quiz.answer%> </b>) </span>
+                    <p class="subtitle is-4"><%= quiz.answer1 %></p>
+                    <p class="subtitle is-4"><%= quiz.answer2 %></p>
+                    <p class="subtitle is-4"><%= quiz.answer3 %></p>
+                    <a href="/goback" class="button is-info">Go Back</a>
+                </li>
+                
+            </ul>
+        </div>
+
+    <% } %>
+    
         
         <div class="column">
             <div class="box has-background-info">

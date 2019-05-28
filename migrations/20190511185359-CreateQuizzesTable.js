@@ -12,6 +12,10 @@ module.exports = {
             autoIncrement: true,
             unique: true
           },
+          choice: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+          },
           question: {
             type: Sequelize.STRING,
             validate: {notEmpty: {msg: "Question must not be empty."}}
@@ -20,6 +24,9 @@ module.exports = {
             type: Sequelize.STRING,
             validate: {notEmpty: {msg: "Answer must not be empty."}}
           },
+          answer1: Sequelize.STRING,
+          answer2: Sequelize.STRING,
+          answer3: Sequelize.STRING,
           createdAt: {
             type: Sequelize.DATE,
             allowNull: false
