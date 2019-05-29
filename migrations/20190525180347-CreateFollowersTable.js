@@ -16,11 +16,18 @@ module.exports = {
                   primaryKey: true,
                   unique: "compositeKey",
                   allowNull: false,
+              },
+              createdAt: {
+                  type: Sequelize.DATE,
+                  allowNull: false
+              },
+              updatedAt: {
+                  type: Sequelize.DATE,
+                  allowNull: false
               }
           },
           {
-              sync: {force: true},
-              timestamps: false
+              sync: {force: true}
           }
       );
   },

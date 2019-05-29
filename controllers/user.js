@@ -53,7 +53,39 @@ exports.index = (req, res, next) => {
 // GET /users/:userId
 exports.show = (req, res, next) => {
     const {user} = req;
-    res.render('users/show', {user});
+
+    //Show magic methods
+    //console.log(Object.keys(user.__proto__));
+    
+    new Promise((resolve,reject) => {
+        if(req.session.user){
+            resolve(
+                req.user.getFollowedBy({where: {id: req.session.user.id}})
+                .then(follower => {
+                    if(follower.length>0){
+                        req.user.followed = true;
+                    }
+                    req.user.getFollowing({where: {id: req.session.user.id}})
+                    .then(following => {
+
+                    })
+                })
+            );  
+        }else{
+            resolve();
+        }
+    })
+    .then( () => {
+        req.user.getFollowedBy()
+        .then(followers => {
+            req.user.getFollowing()
+            .then(following => {
+                res.render('users/show', {user,followers,following});
+            })
+        })
+        
+    })
+    .catch(error => next(error));
 };
 
 //POST /signup
@@ -205,12 +237,16 @@ exports.destroy = (req, res, next) => {
 //PUT /users/:userId/follow
 exports.follow = (req,res,next) => {
     let {user} = req;
-    //Show magic methods
-    //console.log(Object.keys(user.__proto__));
 
     return user.addFollowedBy(req.session.user)
     .then(() => {
-        res.redirect('/goback');
+        models.user.findByPk(req.session.user.id)
+        .then((me) => {
+            me.addFollowing(user)
+            .then(() => {
+                res.redirect('/goback');
+            });
+        });
     })
     .catch(error => {
         console.log(error);
@@ -223,7 +259,13 @@ exports.unfollow = (req,res,next) => {
 
     return user.removeFollowedBy(req.session.user)
     .then(() => {
-        res.redirect('/goback');
+        models.user.findByPk(req.session.user.id)
+        .then((me) => {
+            me.removeFollowing(user)
+            .then(() => {
+                res.redirect('/goback');
+            });
+        });
     })
     .catch(error => {
         console.log(error);

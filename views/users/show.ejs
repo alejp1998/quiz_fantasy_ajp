@@ -1,37 +1,78 @@
 <div class="content">
 
 <h2 class="subtitle is-4">User</h1>
+
+<p>
+    <a href="/users/<%=user.id %>/quizzes" class="button is-info is-small">Creations</a>
+    <span class="tag is-small is-ligth">Points: <%= user.points %></span>
+    <span class="tag is-small is-dark">Fails: <%= user.fails %></span>
+</p>
+
 <ul>
     <li>
-        <a href="/users/<%=user.id %>/quizzes" class="button is-info is-small">Creations</a>
-        <span class="tag is-small is-ligth">Points: <%= user.points %></span>
-        <span class="tag is-small is-dark">Fails: <%= user.fails %></span>
+        <h2 class="subtitle is-5"> User name: <%= user.username %> </h2>
     </li>
 
     <li>
-        User name:<b> <%= user.username %></b>
+        <h2 class="subtitle is-5"> Administrator: <%= user.isAdmin ? "Yes" : "No" %> </h2>
     </li>
-
-    <li>
-        Administrator:<b> <%= user.isAdmin ? "Yes" : "No" %></b>
-    </li>
-
-    <% if (session.user) { %>
-    <li>
-        <a href="/users/<%= user.id %>/follow?_method=PUT"class="button is-small is-success">Follow</a>   
-        <a href="/users/<%= user.id %>/unfollow?_method=DELETE"class="button is-small is-danger">Unfollow</a>
-        
-        <% if (session.user.isAdmin || session.user.id === user.id) { %>
-            <a href="/users/<%= user.id %>/edit"class="button is-small is-warning">Edit</a>
-        <% } %>
-
-        <% if (session.user.isAdmin && session.user.id !== user.id) { %>
-            <a href="/users/<%= user.id %>?_method=DELETE" onClick="return confirm('Delete user: <%= user.username %>');" class="button is-small is-danger">Delete</a>
-        <% } %>
-    </li>
-    <% } %>
 </ul>
 
-<a href="/goback" class="button">Go back</a>
+<a href="/goback" class="button is-small">Go back</a>
+
+<% if (session.user) { %>
+    <% if(user.followed && session.user.id!=user.id){ %>
+        <a href="/users/<%= user.id %>/unfollow?_method=DELETE"class="button is-small is-danger">Unfollow</a>
+    <% }else if(!user.followed && session.user.id!=user.id){ %>
+        <a href="/users/<%= user.id %>/follow?_method=PUT"class="button is-small is-success">Follow</a>
+    <% } %>   
+
+    <% if (session.user.isAdmin || session.user.id === user.id) { %>
+        <a href="/users/<%= user.id %>/edit"class="button is-small is-warning">Edit</a>
+    <% } %>
+
+    <% if (session.user.isAdmin && session.user.id !== user.id) { %>
+        <a href="/users/<%= user.id %>?_method=DELETE" onClick="return confirm('Delete user: <%= user.username %>');" class="button is-small is-danger">Delete</a>
+    <% } %>
+<% } %>
+
+
+<% if(followers.length>0 || following.length>0){ %>
+    <div class="columns">
+
+        <% if(followers.length>0){ %>
+            <div class="column">
+                <div class="box">
+                    <h2 class="subtitle is-5">Followers</h2>
+                    <ul>
+                        <% for (let follower of followers){ %>
+                            <li>
+                                <p><%= follower.username %></p>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        <% } %>
+
+        <% if(following.length>0){ %>
+            <div class="column">
+                <div class="box">
+                    <h2 class="subtitle is-5">Followers</h2>
+                    <ul>
+                        <% for (let follows of following){ %>
+                            <li>
+                                <p><%= follows.username %></p>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        <% } %>
+
+    </div>
+    
+
+<% } %>
 
 </div>
