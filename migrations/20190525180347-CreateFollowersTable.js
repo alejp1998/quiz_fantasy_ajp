@@ -7,14 +7,10 @@ module.exports = {
           {
               followerId: {
                   type: Sequelize.INTEGER,
-                  primaryKey: true,
-                  unique: "compositeKey",
                   allowNull: false
               },
               followingId: {
                   type: Sequelize.INTEGER,
-                  primaryKey: true,
-                  unique: "compositeKey",
                   allowNull: false,
               },
               createdAt: {

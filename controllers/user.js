@@ -57,24 +57,16 @@ exports.show = (req, res, next) => {
     //Show magic methods
     //console.log(Object.keys(user.__proto__));
     
-    new Promise((resolve,reject) => {
-        if(req.session.user){
-            resolve(
-                req.user.getFollowedBy({where: {id: req.session.user.id}})
-                .then(follower => {
-                    if(follower.length>0){
-                        req.user.followed = true;
-                    }
-                    req.user.getFollowing({where: {id: req.session.user.id}})
-                    .then(following => {
-
-                    })
-                })
-            );  
-        }else{
-            resolve();
+    req.user.getFollowedBy({where: {id: req.session.user.id}})
+    .then(follower => {
+        if(follower.length>0){
+            req.user.followed = true;
         }
-    })
+        req.user.getFollowing({where: {id: req.session.user.id}})
+        .then(following => {
+
+        })
+    }) 
     .then( () => {
         req.user.getFollowedBy()
         .then(followers => {
@@ -244,7 +236,7 @@ exports.follow = (req,res,next) => {
         .then((me) => {
             me.addFollowing(user)
             .then(() => {
-                res.redirect('/goback');
+                res.redirect('/users/'+req.session.user.id);
             });
         });
     })
@@ -263,7 +255,7 @@ exports.unfollow = (req,res,next) => {
         .then((me) => {
             me.removeFollowing(user)
             .then(() => {
-                res.redirect('/goback');
+                res.redirect('/users/'+req.session.user.id);
             });
         });
     })
