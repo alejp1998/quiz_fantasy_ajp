@@ -62,6 +62,36 @@ exports.index = (req, res, next) => {
 			countOptions.where = {choice: true};
 		}else if(search==='nochoice'){
 			countOptions.where = {choice: false};
+		}else if(search==='friends'){
+			title = "Friends' Quizzes";
+			return req.user.getFollowing()
+            .then(following => {
+            	let ids = [];
+            	for(var i=0; i<following.length; i++){
+            		ids[i] = following[i].id;
+            	}
+            	countOptions.where = {authorId: {[Op.in]: ids}}
+            	models.quiz.count(countOptions)
+			    .then(count => {
+			    	//Pagination
+					const page_items = 5;
+					//The page shown is in the query
+					const pageno = Number(req.query.pageno) || 1;
+					//Create String with HTML to render pagination buttons
+					res.locals.paginate_control = paginate(count, page_items, pageno, req.url);
+
+					const findOptions = {
+						...countOptions,
+						offset: page_items*(pageno-1),
+						limit: page_items
+					};
+
+					return models.quiz.findAll(findOptions);
+			    })
+            }).then(quizzes => {
+		    	res.render('quizzes/index.ejs',{quizzes,search,title});
+			}).catch(error => next(error));
+
 		}else{
 			//Normalizamos texto sustituyendo los blancos por %
 			const search_like = "%" + search.replace(/ +/g,"%") + "%";
@@ -71,7 +101,7 @@ exports.index = (req, res, next) => {
 		
 	}
 
-	if(req.user){
+	if(req.user && search!='friends'){
 		countOptions.where.authorId = req.user.id;
 		title = req.user.username + "'s Quizzes";
 	}

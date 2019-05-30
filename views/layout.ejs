@@ -63,6 +63,7 @@
             <a class="navbar-item" href="/quizzes?search=nochoice">Q&A Quizzes</a>
             <% if (session.user){ %>
               <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
+              <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes?search=friends">Friends' Quizzes</a>
             <% } %>
         </div>
       </div>
