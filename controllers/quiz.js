@@ -7,7 +7,7 @@ var ssn;
 
 //Autoload quiz asociado a :quizId
 exports.load = (req, res, next, quizId) => {
-	
+
     const options = {
         include: [
             {
@@ -95,10 +95,10 @@ exports.index = (req, res, next) => {
 		}else{
 			//Normalizamos texto sustituyendo los blancos por %
 			const search_like = "%" + search.replace(/ +/g,"%") + "%";
-			//Creamos la expresion de la busqueda 
+			//Creamos la expresion de la busqueda
 			countOptions.where = {question: { [Op.like]: search_like}};
 		}
-		
+
 	}
 
 	if(req.user && search!='friends'){
@@ -147,7 +147,7 @@ exports.checkQuiz = (req, res, next) => {
 	if(!quiz){
 		return res.render(`El quiz ${req.params.quizId} no existe.`);
 	}
-	if(quiz.answer.toLowerCase().trim()===answer.toLowerCase().trim()){
+	if(quiz.answer===answer){
 		result = "Correct";
 	}else{
 		result = "Incorrect";
@@ -238,7 +238,7 @@ exports.showQuiz = (req, res, next) => {
 						req.quiz.upvoted = true;
 					}
 				})
-			);	
+			);
 		}else{
 			resolve();
 		}
@@ -251,26 +251,17 @@ exports.showQuiz = (req, res, next) => {
 
 //GET /quizzes/new
 exports.newQuiz = (req, res, next) => {
-	const quiz = {question: '', answer: '', answer1: '', answer2: '', answer3: ''};
+	const quiz = {question: '', answer: '', answer1: '', answer2: '', answer3: '', answer4: ''};
 	res.render('quizzes/new.ejs',{quiz});
 };
 
 //POST /quizzes/
 exports.addQuiz = (req, res, next) => {
-	const {question,answer,answer1,answer2,answer3} = req.body;
-	let choice;
+	const {course,subject,desc,question,answer,answer1,answer2,answer3,answer4} = req.body;
+
 	const authorId = req.session.user && req.session.user.id || 0;
 
-	const quiz = {choice,question,answer,answer1,answer2,answer3,authorId};
-
-	if(answer1=='' && answer2=='' && answer3==''){
-		quiz.choice = false;
-	}else if(answer1==answer || answer2==answer || answer3==answer){
-		quiz.choice = true;
-	}else{
-		req.flash('error', 'You must enter all answers correctly');
-		return res.render('quizzes/new', {quiz});
-	}
+	const quiz = {course,subject,desc,question,answer,answer1,answer2,answer3,authorId};
 
 	models.quiz.create(quiz)
 		.then(() => {
@@ -330,7 +321,7 @@ exports.randomPlay = (req,res,next) => {
 		req.flash('error', 'Error asking next question: ' + error.message);
 		next(error);
 	});
-	
+
 };
 
 //GET /quizzes/randomcheck/:quizId
@@ -381,8 +372,6 @@ exports.randomCheck = (req, res, next) => {
 		}
 		return res.render('quizzes/random_result.ejs', {result,score,answer} );
 	}
-	
-	
+
+
 };
-
-

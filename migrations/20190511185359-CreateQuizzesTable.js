@@ -17,11 +17,11 @@ module.exports = {
             defaultValue: false
           },
           subject: {
-              type: DataTypes.STRING,
+              type: Sequelize.STRING,
               validate: {notEmpty: {msg: "Subject must not be empty"}}
           },
           desc: {
-              type: DataTypes.STRING,
+              type: Sequelize.STRING,
               validate: {notEmpty: {msg: "Description must not be empty"}}
           },
           question: {

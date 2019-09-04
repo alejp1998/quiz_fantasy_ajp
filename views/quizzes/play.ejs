@@ -1,62 +1,40 @@
 <div class="content">
 
-    <h2 class="subtitle is-4">Play Quiz</h2>
+    <h2 class="subtitle is-4"><%=quiz.subject%> - <%=quiz.desc%></h2>
 
     <div class="columns">
         <div class="column is-two-thirds">
             <form method="post" action="/quizzes/<%=quiz.id%>/check?_method=PUT">
-                
-                <% if(!quiz.choice){ %>
+
                     <ul>
 
                         <li>
-                            <span class="tag is-dark is-medium"><%=quiz.question%></span>
-                            <input type="text" placeholder="Answer" class="input is-primary" name="answer" autocomplete="off">
+                            <h3 class="subtitle is-5"><%=quiz.question%></h3>
+                                <div class="control">
+                                  <p><label class="radio">
+                                    <input type="radio" name="answer" value="1">
+                                    <%= quiz.answer1 %>
+                                  </label></p>
+                                  <p><label class="radio">
+                                    <input type="radio" name="answer" value="2">
+                                    <%= quiz.answer2 %>
+                                  </label></p>
+                                  <p><label class="radio">
+                                    <input type="radio" name="answer" value="3">
+                                    <%= quiz.answer3 %>
+                                  </label></p>
+                                  <p><label class="radio">
+                                    <input type="radio" name="answer" value="4">
+                                    <%= quiz.answer4 %>
+                                  </label></p>
+                                </div>
                             <input type="submit" class="button is-success" value="Check">
                             <a href="/goback" class="button is-info">Go Back</a>
                         </li>
-                        
-                    </ul>
-                <% }else{ %>
-                    <ul>
 
-                        <li>
-                            <span class="tag is-dark is-medium"><%=quiz.question%></span>
-                            <div class="control">
-                              <div class="select">
-                                <select name="answer">
-                                  <option><%= quiz.answer1 %></option>
-                                  <option><%= quiz.answer2 %></option>
-                                  <option><%= quiz.answer3 %></option>
-                                </select>
-                              </div>
-                            </div>
-                            <input type="submit" class="button is-success" value="Check">
-                            <a href="/goback" class="button is-info">Go Back</a>
-                        </li>
-                        
                     </ul>
-                <% } %>
 
-                
             </form>
         </div>
-        
-        <div class="column">
-            <div class="box tips">
-                <h3 class="subtitle is-5">Quiz Tips:</h3>
-
-                <% if(session.user){ %>
-                    <% include ../tips/new %>
-                <% } %>
-
-                <% var tips = quiz.tips; %>
-                <% var quizId = quiz.id; %>
-                <% var quizAuthorId = quiz.authorId; %>
-
-                 <% include ../tips/index %>
-
-            </div>
-        </div> 
     </div>
-</div>   
+</div>
