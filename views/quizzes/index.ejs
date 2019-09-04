@@ -24,7 +24,6 @@
         <li>
 
           <a href="/quizzes/<%=quiz.id%>/play" class="subtitle is-5"><%=quiz.question%></a>
-          <span class="tag is-info is-small"><%if(quiz.fans.length != 0){ %><%= quiz.fans.length %><% }else{ %>0<% } %></span>
           <a href="/quizzes/<%=quiz.id%>" class="button is-primary is-small">Show</a>
 
           <% if(isAdmin || title){%>

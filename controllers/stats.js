@@ -6,7 +6,7 @@ var ssn;
 
 // GET /stats
 exports.stats = (req,res,next) => {
-	let nusers,nquizzes,ntips;
+	let nusers,nquizzes;
 	let bestUsers = [];
 
 	const bestOptions = {
@@ -23,22 +23,17 @@ exports.stats = (req,res,next) => {
 			models.quiz.count()
 			.then(count => {
 				nquizzes = count;
-				models.tip.count()
-				.then(count => {
-					ntips = count;
-					return res.render('stats/stats.ejs', {nusers,nquizzes,ntips,bestUsers} );
-				});
+				return res.render('stats/stats.ejs', {nusers,nquizzes,bestUsers} );
 			});
 		});
 	}).catch(error => next(error));
 };
 
-// GET /userstats/:userId 
+// GET /userstats/:userId
 exports.userstats = (req,res,next) => {
 	const userOptions = {
 		include: [
-			{model: models.quiz, as: 'quizzes'},
-			{model: models.tip, as: 'tips'}
+			{model: models.quiz, as: 'quizzes'}
 		]
 	};
 

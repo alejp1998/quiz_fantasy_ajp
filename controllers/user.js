@@ -25,7 +25,7 @@ exports.index = (req, res, next) => {
         where: {},
         include: []
     };
-    
+
     models.user.count()
     .then(count => {
         //Pagination
@@ -53,31 +53,9 @@ exports.index = (req, res, next) => {
 // GET /users/:userId
 exports.show = (req, res, next) => {
     const {user} = req;
-
+    res.render('users/show', {user,followers,following});
     //Show magic methods
     //console.log(Object.keys(user.__proto__));
-    
-    req.user.getFollowedBy({where: {id: req.session.user.id}})
-    .then(follower => {
-        if(follower.length>0){
-            req.user.followed = true;
-        }
-        req.user.getFollowing({where: {id: req.session.user.id}})
-        .then(following => {
-
-        })
-    }) 
-    .then( () => {
-        req.user.getFollowedBy()
-        .then(followers => {
-            req.user.getFollowing()
-            .then(following => {
-                res.render('users/show', {user,followers,following});
-            })
-        })
-        
-    })
-    .catch(error => next(error));
 };
 
 //POST /signup
@@ -225,42 +203,3 @@ exports.destroy = (req, res, next) => {
     })
     .catch(error => next(error));
 };
-
-//PUT /users/:userId/follow
-exports.follow = (req,res,next) => {
-    let {user} = req;
-
-    return user.addFollowedBy(req.session.user)
-    .then(() => {
-        models.user.findByPk(req.session.user.id)
-        .then((me) => {
-            me.addFollowing(user)
-            .then(() => {
-                res.redirect('/users/'+req.session.user.id);
-            });
-        });
-    })
-    .catch(error => {
-        console.log(error);
-    });
-};
-
-//PUT /users/:userId/unfollow
-exports.unfollow = (req,res,next) => {
-    let {user} = req;
-
-    return user.removeFollowedBy(req.session.user)
-    .then(() => {
-        models.user.findByPk(req.session.user.id)
-        .then((me) => {
-            me.removeFollowing(user)
-            .then(() => {
-                res.redirect('/users/'+req.session.user.id);
-            });
-        });
-    })
-    .catch(error => {
-        console.log(error);
-    });
-};
-

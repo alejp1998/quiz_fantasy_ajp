@@ -21,7 +21,7 @@
                             <input type="submit" class="button is-success" value="Check">
                             <a href="/goback" class="button is-info">Go Back</a>
                         </li>
-                        
+
                     </ul>
                 <% }else{ %>
                     <ul>
@@ -40,28 +40,11 @@
                             <input type="submit" class="button is-success" value="Check">
                             <a href="/goback" class="button is-info">Go Back</a>
                         </li>
-                        
+
                     </ul>
                 <% } %>
-                
+
             </form>
         </div>
-        
-        <div class="column">
-            <div class="box tips">
-                <h3 class="subtitle is-5">Quiz Tips:</h3>
-
-                <% if(session.user){ %>
-                    <% include ../tips/new %>
-                <% } %>
-
-                <% var tips = quiz.tips; %>
-                <% var quizId = quiz.id; %>
-                <% var quizAuthorId = quiz.authorId; %>
-
-                 <% include ../tips/index %>
-
-            </div>
-        </div> 
     </div>
-</div>   
+</div>

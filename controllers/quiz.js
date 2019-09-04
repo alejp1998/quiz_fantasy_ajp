@@ -10,12 +10,7 @@ exports.load = (req, res, next, quizId) => {
 
     const options = {
         include: [
-            {
-                model: models.tip,
-                include: [{model: models.user, as: 'author'}]
-            },
-            {model: models.user, as: 'author'},
-            {model: models.user, as: 'fans'}
+            {model: models.user, as: 'author'}
         ]
     };
 
@@ -50,8 +45,7 @@ exports.adminOrAuthorRequired = (req, res, next) => {
 exports.index = (req, res, next) => {
 
 	let countOptions = {
-        where: {},
-        include: [{model: models.user, as: 'fans'}]
+        where: {}
     };
 	let title = '';
 
@@ -60,38 +54,6 @@ exports.index = (req, res, next) => {
 	if(search){
 		if(search==='choice'){
 			countOptions.where = {choice: true};
-		}else if(search==='nochoice'){
-			countOptions.where = {choice: false};
-		}else if(search==='friends'){
-			title = "Friends' Quizzes";
-			return req.user.getFollowing()
-            .then(following => {
-            	let ids = [];
-            	for(var i=0; i<following.length; i++){
-            		ids[i] = following[i].id;
-            	}
-            	countOptions.where = {authorId: {[Op.in]: ids}}
-            	models.quiz.count(countOptions)
-			    .then(count => {
-			    	//Pagination
-					const page_items = 5;
-					//The page shown is in the query
-					const pageno = Number(req.query.pageno) || 1;
-					//Create String with HTML to render pagination buttons
-					res.locals.paginate_control = paginate(count, page_items, pageno, req.url);
-
-					const findOptions = {
-						...countOptions,
-						offset: page_items*(pageno-1),
-						limit: page_items
-					};
-
-					return models.quiz.findAll(findOptions);
-			    })
-            }).then(quizzes => {
-		    	res.render('quizzes/index.ejs',{quizzes,search,title});
-			}).catch(error => next(error));
-
 		}else{
 			//Normalizamos texto sustituyendo los blancos por %
 			const search_like = "%" + search.replace(/ +/g,"%") + "%";
@@ -147,10 +109,10 @@ exports.checkQuiz = (req, res, next) => {
 	if(!quiz){
 		return res.render(`El quiz ${req.params.quizId} no existe.`);
 	}
-	if(quiz.answer===answer){
+	if(Number(quiz.answer) === Number(answer)){
 		result = "Correct";
 	}else{
-		result = "Incorrect";
+		result = "Incorrect" + answer;
 	}
 
 	if(req.session.user){
@@ -186,10 +148,9 @@ exports.updateQuiz = (req, res, next) => {
 	const id = req.quiz.id;
 	var quiz = req.body;
 	quiz.id = id;
-	const {answer,answer1,answer2,answer3} = quiz;
+	const {course,subject,desc,answer,answer1,answer2,answer3,answer4} = quiz;
 
-	if(!quiz.choice){
-
+	if(Number(answer)<=4 && Number(answer)>=1){
 		models.quiz.update( quiz, { where: {id} } )
 		.then(() => {
 			req.flash('success','Quiz updated succesfully');
@@ -202,51 +163,18 @@ exports.updateQuiz = (req, res, next) => {
 			req.flash('error','Error updating the quiz: '+ error.message);
 			next(error);
 		});
-
-	}else if(quiz.choice){
-
-		if((answer1==answer) || (answer2==answer) || (answer3==answer)){
-			models.quiz.update( quiz, { where: {id} } )
-			.then(() => {
-				req.flash('success','Quiz updated succesfully');
-				res.redirect('/quizzes');
-			}).catch(Sequelize.ValidationError, error => {
-				req.flash('error','There are errors in the form:');
-				error.errors.forEach(({message}) => req.flash('error',message));
-				res.render('quizzes/edit',{quiz});
-			}).catch(error => {
-				req.flash('error','Error updating the quiz: '+ error.message);
-				next(error);
-			});
-		}else{
-			req.flash('error','Errors in choice answers');
-			res.render('quizzes/edit',{quiz});
-		}
-
+	}else{
+		req.flash('error','Errors in choice answers');
+		res.render('quizzes/edit',{quiz});
 	}
 };
 
 //GET /quizzes/:quizId
 exports.showQuiz = (req, res, next) => {
 	const {quiz} = req;
-	new Promise((resolve,reject) => {
-		if(req.session.user){
-			resolve(
-				req.quiz.getFans({where: {id: req.session.user.id}})
-				.then(fans => {
-					if(fans.length>0){
-						req.quiz.upvoted = true;
-					}
-				})
-			);
-		}else{
-			resolve();
-		}
-	})
-	.then( () => {
-		res.render('quizzes/show.ejs', {quiz} );
-	})
-	.catch(error => next(error));
+  const answers = [quiz.answer1,quiz.answer2,quiz.answer3,quiz.answer4];
+  const answer = answers[quiz.answer-1]
+	res.render('quizzes/show.ejs', {quiz,answer} );
 };
 
 //GET /quizzes/new
