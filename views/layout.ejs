@@ -44,19 +44,6 @@
       <a class="navbar-item" href="/quizzes/randomplay?_method=PUT">Jugar</a>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="/users">Usuarios</a>
-        <div class="navbar-dropdown is-boxed">
-            <% if (!session.user){ %>
-                <a class="navbar-item" href="/login">Inicia Sesión</a>
-                <a class="navbar-item" href="/signup">Nueva Cuenta</a>
-            <% }else{ %>
-                <a class="navbar-item" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
-                <a class="navbar-item" href="/logout">Cerrar Sesión</a>
-            <% } %>
-        </div>
-      </div>
-
-      <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/quizzes">Tests (por curso)</a>
         <div class="navbar-dropdown is-boxed">
             <a class="navbar-item" href="/quizzes?search=choice">Primero</a>
@@ -66,6 +53,19 @@
             <% if (session.user){ %>
               <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
               <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes?search=friends">Friends' Quizzes</a>
+            <% } %>
+        </div>
+      </div>
+      
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/users">Usuarios</a>
+        <div class="navbar-dropdown is-boxed">
+            <% if (!session.user){ %>
+                <a class="navbar-item" href="/login">Inicia Sesión</a>
+                <a class="navbar-item" href="/signup">Nueva Cuenta</a>
+            <% }else{ %>
+                <a class="navbar-item" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
+                <a class="navbar-item" href="/logout">Cerrar Sesión</a>
             <% } %>
         </div>
       </div>

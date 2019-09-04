@@ -12,21 +12,30 @@ module.exports = {
             autoIncrement: true,
             unique: true
           },
-          choice: {
-            type: Sequelize.BOOLEAN,
+          course: {
+            type: Sequelize.INTEGER,
             defaultValue: false
+          },
+          subject: {
+              type: DataTypes.STRING,
+              validate: {notEmpty: {msg: "Subject must not be empty"}}
+          },
+          desc: {
+              type: DataTypes.STRING,
+              validate: {notEmpty: {msg: "Description must not be empty"}}
           },
           question: {
             type: Sequelize.STRING,
             validate: {notEmpty: {msg: "Question must not be empty."}}
           },
           answer: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             validate: {notEmpty: {msg: "Answer must not be empty."}}
           },
           answer1: Sequelize.STRING,
           answer2: Sequelize.STRING,
           answer3: Sequelize.STRING,
+          answer4: Sequelize.STRING,
           createdAt: {
             type: Sequelize.DATE,
             allowNull: false
