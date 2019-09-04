@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Quiz Fantasy</title>
+    <title>(T)E(S)TSIT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -29,7 +29,7 @@
 
 <nav class="navbar navlogo logo" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item logo1" href="/">QUIZ FANTASY</a>
+    <a class="navbar-item logo1" href="/">(T)E(S)TSIT</a>
     <div class="navbar-burger burger" data-target="navMenu">
       <span></span>
       <span></span>
@@ -40,27 +40,29 @@
   <div id="navMenu" class="navbar-menu">
 
     <div class="navbar-start">
-      <a class="navbar-item" href="/">Home</a>
-      <a class="navbar-item" href="/quizzes/randomplay?_method=PUT">Play</a>
+      <a class="navbar-item" href="/">Inicio</a>
+      <a class="navbar-item" href="/quizzes/randomplay?_method=PUT">Jugar</a>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="/users">Users</a>
+        <a class="navbar-link" href="/users">Usuarios</a>
         <div class="navbar-dropdown is-boxed">
             <% if (!session.user){ %>
-                <a class="navbar-item" href="/login">LogIn</a>
-                <a class="navbar-item" href="/signup">SignUp</a>
+                <a class="navbar-item" href="/login">Inicia Sesión</a>
+                <a class="navbar-item" href="/signup">Nueva Cuenta</a>
             <% }else{ %>
                 <a class="navbar-item" href="/users/<%= session.user.id %>" ><%= session.user.username%></a>
-                <a class="navbar-item" href="/logout">LogOut</a>
+                <a class="navbar-item" href="/logout">Cerrar Sesión</a>
             <% } %>
         </div>
       </div>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="/quizzes">Quizzes</a>
+        <a class="navbar-link" href="/quizzes">Tests (por curso)</a>
         <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item" href="/quizzes?search=choice">Choice Quizzes</a>
-            <a class="navbar-item" href="/quizzes?search=nochoice">Q&A Quizzes</a>
+            <a class="navbar-item" href="/quizzes?search=choice">Primero</a>
+            <a class="navbar-item" href="/quizzes?search=nochoice">Segundo</a>
+            <a class="navbar-item" href="/quizzes?search=choice">Tercero</a>
+            <a class="navbar-item" href="/quizzes?search=choice">Cuarto</a>
             <% if (session.user){ %>
               <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
               <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes?search=friends">Friends' Quizzes</a>
@@ -72,12 +74,12 @@
         <a class="navbar-link" href="/stats">Stats</a>
         <% if(session.user){ %>
           <div class="navbar-dropdown is-boxed">
-              <a class="navbar-item" href="/userstats/<%= session.user.id %>">Userstats</a>
+              <a class="navbar-item" href="/userstats/<%= session.user.id %>">Tus Stats</a>
           </div>
         <% } %>
       </div>
 
-      <a class="navbar-item" href="/credits">Credits</a>
+      <a class="navbar-item" href="/credits">Créditos</a>
 
     </div>
 
@@ -156,14 +158,14 @@
           <%- paginate_control %>
         <% } %>
     </div>
-    
+
 </section>
 
 </div>
 
 <footer class="footer">
   <div class="box has-text-centered">
-    <a class='subtitle is-6' href="http://en.wikipedia.org/wiki/Quiz">Who doesn't care about what a quiz is?</a>
+    <a class='subtitle is-6' href="https://moodle.upm.es/titulaciones/oficiales/login/login.php">No estás seguro de la respuesta? Haber estudiao</a>
   </div>
 </footer>
 
