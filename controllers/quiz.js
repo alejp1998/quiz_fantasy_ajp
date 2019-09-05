@@ -91,6 +91,26 @@ exports.index = (req, res, next) => {
     .catch(error => next(error));
 };
 
+//GET /quizzes/primero
+exports.primero = (req, res, next) => {
+	res.render('quizzes/primero.ejs');
+};
+
+//GET /quizzes/segundo
+exports.segundo = (req, res, next) => {
+	res.render('quizzes/segundo.ejs');
+};
+
+//GET /quizzes/tercero
+exports.tercero = (req, res, next) => {
+	res.render('quizzes/tercero.ejs');
+};
+
+//GET /quizzes/cuarto
+exports.cuarto = (req, res, next) => {
+	res.render('quizzes/cuarto.ejs');
+};
+
 //GET /quizzes/:quizId/play
 exports.playQuiz = (req, res, next) => {
 	const quiz = req.quiz;

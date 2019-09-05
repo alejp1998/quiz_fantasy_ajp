@@ -2,16 +2,16 @@
 
   <div class="columns">
     <div class="column">
-      <h1 class="title"><%= title || 'All Quizzes' %></h1>
+      <h1 class="title"><%= title || 'Todas las Preguntas' %></h1>
     </div>
     <div class="column">
-      <a href="/quizzes/new" class="button is-success is-medium">New Quiz</a>
+      <a href="/quizzes/new" class="button is-success is-medium">Nueva Pregunta</a>
     </div>
     <div class="column is-half">
       <h3 class="subtitle is-6">
         <form method="get" action="<%= url %>">
             <input type="text" class="input is-info" name="search" value="<%= locals.search || '' %>" placeholder="Lost?" autocomplete="off" />
-            <input type="submit" class="button is-info" value="Search">
+            <input type="submit" class="button is-info" value="Buscar"
         </form>
       </h3>
     </div>
@@ -24,7 +24,7 @@
         <li>
 
           <a href="/quizzes/<%=quiz.id%>/play" class="subtitle is-5"><%=quiz.question%></a>
-          <a href="/quizzes/<%=quiz.id%>" class="button is-primary is-small">Show</a>
+          <a href="/quizzes/<%=quiz.id%>" class="button is-primary is-small">Mostrar</a>
 
           <% if(isAdmin || title){%>
           <a href="/quizzes/<%=quiz.id%>/edit" class="button is-warning is-small">Edit</a>

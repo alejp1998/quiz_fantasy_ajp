@@ -1,5 +1,5 @@
 <div class="content">
-  
+
   <h2 class="subtitle is-4">Add New Quiz</h2>
 
   <form method="post" action="/quizzes">
@@ -7,18 +7,17 @@
     <ul>
 
       <li>
-        <span class="tag is-dark is-medium">Question:</span>
+        <span class="tag is-dark is-medium">Pregunta:</span>
         <input type="text" value="<%=quiz.question%>" class="input is-primary" name="question" autocomplete="off">
       </li>
 
       <li>
-        <span class="tag is-dark is-medium">Correct Answer:</span>
+        <span class="tag is-dark is-medium">Número de respuesta correcta:</span>
         <input type="text" value="<%=quiz.answer%>" class="input is-primary" name="answer" autocomplete="off">
       </li>
 
       <li>
-        <h2 class="subtitle is-5">Choice quiz:</h2>
-        <p>You have to fill all the answers, and one of them must be equal to the correct answer. If you want a normal quiz, leave them in blank</p>
+        <h2 class="subtitle is-5">Opciones:</h2>
       </li>
 
       <li>
@@ -37,11 +36,16 @@
       </li>
 
       <li>
+        <span class="tag is-dark is-medium">Answer4:</span>
+        <input type="text" value="<%=quiz.answer3%>" class="input is-primary" name="answer4" autocomplete="off">
+      </li>
+
+      <li>
         <input type="submit" class="button is-success" value="Add Quiz">
       </li>
 
     </ul>
-              
+
   </form>
-  
+
 </div>

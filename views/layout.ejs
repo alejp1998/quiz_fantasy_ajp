@@ -46,17 +46,13 @@
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/quizzes">Tests (por curso)</a>
         <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item" href="/quizzes?search=choice">Primero</a>
-            <a class="navbar-item" href="/quizzes?search=nochoice">Segundo</a>
-            <a class="navbar-item" href="/quizzes?search=choice">Tercero</a>
-            <a class="navbar-item" href="/quizzes?search=choice">Cuarto</a>
-            <% if (session.user){ %>
-              <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes">MyQuizzes</a>
-              <a class="navbar-item" href="/users/<%= session.user.id %>/quizzes?search=friends">Friends' Quizzes</a>
-            <% } %>
+            <a class="navbar-item" href="/quizzes/primero">Primero</a>
+            <a class="navbar-item" href="/quizzes/segundo">Segundo</a>
+            <a class="navbar-item" href="/quizzes/tercero">Tercero</a>
+            <a class="navbar-item" href="/quizzes/cuarto">Cuarto</a>
         </div>
       </div>
-      
+
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/users">Usuarios</a>
         <div class="navbar-dropdown is-boxed">
