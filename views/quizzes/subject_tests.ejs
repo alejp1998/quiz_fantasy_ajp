@@ -1,0 +1,19 @@
+<div class="content">
+
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Tests de <%=subject%></h1>
+    </div>
+  </div>
+
+  <ul>
+    <% for (var i in descs) { %>
+    <% var desc = descs[i]; %>
+        <li>
+
+          <a href="/quizzes/" class="subtitle is-5"><%=desc%></a>
+          <a href="/quizzes/" class="button is-primary is-small">Solución</a>
+
+        </li>
+    <% } %>
+  </ul>

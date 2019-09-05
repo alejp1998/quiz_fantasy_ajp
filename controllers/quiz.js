@@ -111,6 +111,42 @@ exports.cuarto = (req, res, next) => {
 	res.render('quizzes/cuarto.ejs');
 };
 
+//GET /quizzes/:subject
+//Cargar todos los quizzes que pertenezcan a una asignatura, y,
+// a partir de ellos formar un array que contenga todas las distintas
+//descripciones de estos, que se mostrarán en una lista.
+exports.subjectTests = (req, res, next) => {
+  const subject = req.params.subject;
+  let descs = [];
+  models.quiz.findAll({
+    where: {subject: subject}
+  }).then(quizzes => {
+    for (var i in quizzes){
+      if (!descs.includes(quizzes[i].desc)){
+        descs.push(quizzes[i].desc)
+      }
+    }
+    res.render('quizzes/subject_tests.ejs', {subject,descs} );
+  }).catch(error => {
+    req.flash('error', 'Error showing subject tests: ' + error.message);
+    next(error);
+  });
+};
+
+
+
+//GET /quizzes/:subject/:desc
+//Se deben precargar todas las preguntas que pertenezcan a una descripción y
+//asignatura en una lista, que se deberá mostrar posteriormente como si de un
+//test de moodle se tratase, para finalmente ser corregidas
+exports.playTest = (req, res, next) => {
+
+  res.render('quizzes/play_test.ejs', {test} );
+  
+};
+
+
+
 //GET /quizzes/:quizId/play
 exports.playQuiz = (req, res, next) => {
 	const quiz = req.quiz;
